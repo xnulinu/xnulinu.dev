@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The control plane is the product — Rajesh RC</title>
+<meta name="description" content="In autonomous systems, capability is becoming a commodity. The defensible problem is trusted execution — not diagnosis." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/blog/style.css" />
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="/">rajesh<span class="dim">@</span>rc<span class="dim"> ~ principal engineer</span></a>
+    <nav class="links">
+      <a href="/#work">work</a>
+      <a href="/#patents">patents</a>
+      <a href="/blog/">writing</a>
+      <a href="/#contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article class="post">
+    <a class="back" href="/blog/">← all writing</a>
+    <header class="post-head">
+      <div class="post-meta">2026-07-01</div>
+      <h1 class="post-title">The control plane is the product</h1>
+      <p class="post-summary">In autonomous systems, capability is becoming a commodity. The defensible problem is trusted execution — not diagnosis.</p>
+    </header>
+    <div class="post-body">
+      <p>For most of my career the hard part of platform work was getting a system to <em>understand</em> state: read the metrics, correlate the logs, find the failing node. We built increasingly good diagnostic machinery, and we assumed that was where the value lived.</p>
+<p>It isn't. Not anymore.</p>
+<p>As models get more capable, diagnosis collapses toward a commodity. A model wired to your connectors can describe what broke and propose a fix in seconds. The thing that stays hard — the thing that actually gates whether any of this reaches production — is <strong>action</strong>.</p>
+<h2>Reading is not acting</h2>
+<p>A system that reads can be wrong cheaply. A system that <em>acts</em> in production can be wrong catastrophically, at machine speed, without hesitation. So the engineering problem shifts entirely. It stops being "can it figure out the answer" and becomes:</p>
+<ul>
+<li>Can it only do what it's <em>scoped</em> to do?</li>
+<li>Is there a <em>blast radius</em> it cannot exceed?</li>
+<li>Is every action <em>reversible</em>?</li>
+<li>Is there a <em>gate</em> before anything irreversible?</li>
+</ul>
+<p>None of that is intelligence. All of it is infrastructure.</p>
+<h2>The shape that keeps recurring</h2>
+<p>Every dependable system I've built has the same spine: intent never reaches production unchecked. It passes through validation, scoping, and — for anything sensitive — a human gate, before it executes, and everything it does is audited and reversible.</p>
+<p>That was true for a Kubernetes operator reconciling a fleet of clusters. It's true for an AI agent remediating a live incident. The actor changed; the control plane didn't.</p>
+<p>That's the bet behind everything I'm building now: the model was never the bottleneck. The control layer was.</p>
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-base">
+    <span>Rajesh RC · Sunnyvale, CA</span>
+    <span><a href="/">← back to portfolio</a></span>
+  </div>
+</footer>
+</body>
+</html>
