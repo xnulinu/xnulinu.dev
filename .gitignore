@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 blog/_*_preview.html
+.claude/
