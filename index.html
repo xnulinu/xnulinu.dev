@@ -51,7 +51,7 @@
 
   ::selection { background: var(--accent-dim); color: #fff; }
   a { color: inherit; text-decoration: none; }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
 
   /* background grid */
   .grid-bg {
@@ -79,7 +79,7 @@
     background: rgba(14,17,22,0.78);
     border-bottom: 1px solid var(--line);
   }
-  .top-inner { display: flex; align-items: center; justify-content: space-between; height: 58px; max-width: 880px; margin: 0 auto; padding: 0 28px; }
+  .top-inner { display: flex; align-items: center; justify-content: space-between; height: 58px; max-width: 1080px; margin: 0 auto; padding: 0 28px; }
   .brand { font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; color: var(--ink); font-weight: 500; white-space: nowrap; }
   .brand .dim { color: var(--ink-faint); }
   nav.links { display: flex; gap: 26px; }
@@ -88,7 +88,7 @@
   @media (max-width: 640px){ nav.links { gap: 16px; } nav.links a:nth-child(3){ display:none; } .brand-suf{ display:none; } }
 
   /* hero */
-  section.hero { position: relative; z-index: 1; padding: 96px 0 56px; }
+  section.hero { position: relative; z-index: 1; padding: 80px 0 28px; }
   .eyebrow {
     font-family: var(--mono); font-size: 12.5px; color: var(--accent);
     letter-spacing: 0.06em; margin-bottom: 24px; display: flex; align-items: center; gap: 10px;
@@ -96,6 +96,13 @@
   .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 rgba(111,207,151,.5); animation: pulse 2.6s infinite; }
   @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(111,207,151,.45);} 70%{box-shadow:0 0 0 7px rgba(111,207,151,0);} 100%{box-shadow:0 0 0 0 rgba(111,207,151,0);} }
 
+  .hero-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 520px) minmax(400px, 1fr);
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .hero-copy { min-width: 0; }
   h1.hero-title {
     font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
     font-size: clamp(38px, 7vw, 68px); line-height: 1.03; margin-bottom: 28px;
@@ -106,12 +113,102 @@
     color: var(--ink-dim); max-width: 640px;
   }
   .hero-lede strong { color: var(--ink); font-weight: 500; }
+  .hero-visual {
+    position: relative;
+    width: 100%;
+    margin-left: auto;
+    aspect-ratio: 4 / 5;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--panel);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  }
+  .hero-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-visual::before,
+  .hero-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .hero-visual::before {
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(111, 207, 151, 0.13) 48%, transparent 52%),
+      linear-gradient(90deg, rgba(79, 157, 216, 0.16), transparent 42%, rgba(111, 207, 151, 0.12));
+    mix-blend-mode: screen;
+    opacity: 0.58;
+    transform: translateY(-100%);
+    animation: kernel-scan 6.5s ease-in-out infinite;
+  }
+  .hero-visual::after {
+    border-radius: 8px;
+    box-shadow: inset 0 0 55px rgba(14, 17, 22, 0.76);
+  }
+  .hero-legend {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 14px;
+    z-index: 2;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.45;
+    color: rgba(230, 235, 240, 0.74);
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
+  }
+  .hero-legend b { color: var(--ink); font-weight: 600; }
+  .kernel-signal {
+    position: absolute;
+    border: 1px solid rgba(111, 207, 151, 0.35);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    animation: kernel-ping 4.8s ease-out infinite;
+  }
+  .kernel-signal.one {
+    width: 32%;
+    aspect-ratio: 1;
+    left: 34%;
+    top: 39%;
+  }
+  .kernel-signal.two {
+    width: 54%;
+    aspect-ratio: 1;
+    left: 23%;
+    top: 28%;
+    animation-delay: 1.45s;
+    border-color: rgba(79, 157, 216, 0.34);
+  }
+  @keyframes kernel-scan {
+    0%, 18% { transform: translateY(-100%); }
+    55%, 100% { transform: translateY(100%); }
+  }
+  @keyframes kernel-ping {
+    0% { transform: scale(0.72); opacity: 0; }
+    18% { opacity: 0.42; }
+    72%, 100% { transform: scale(1.22); opacity: 0; }
+  }
+  @media (max-width: 880px) {
+    section.hero { padding-top: 74px; }
+    .hero-wrap { grid-template-columns: 1fr; }
+    .hero-visual {
+      width: min(100%, 460px);
+      margin: 8px auto 0;
+      aspect-ratio: 16 / 11;
+    }
+  }
 
   /* prose story */
-  section.story { position: relative; z-index: 1; padding: 40px 0 8px; }
+  section.story { position: relative; z-index: 1; padding: 28px 0 8px; }
   .story p {
     font-family: var(--serif); font-size: clamp(18px, 2.2vw, 21px); line-height: 1.7;
-    color: var(--ink-dim); max-width: 640px; margin-bottom: 26px;
+    color: var(--ink-dim); margin-bottom: 26px;
   }
   .story p strong { color: var(--ink); font-weight: 500; }
   .story p a { color: var(--accent); border-bottom: 1px solid var(--accent-dim); transition: border-color .15s; }
@@ -195,14 +292,22 @@
 <main>
   <!-- HERO -->
   <section class="hero">
-    <div class="wrap">
-      <div class="eyebrow reveal"><span class="dot"></span> San Francisco, CA · founder of AstroPulse</div>
-      <h1 class="hero-title reveal">I'm Rajesh <span class="soft">(RJ).</span></h1>
-      <p class="hero-lede reveal">
-        I've spent my whole career on one question: <strong>how do you make a system dependable enough
-        to trust it in production</strong> — running on its own, where being wrong has real consequences?
-        I keep chasing that question into harder places, each with a bigger blast radius than the last.
-      </p>
+    <div class="wrap hero-wrap">
+      <div class="hero-copy">
+        <div class="eyebrow reveal"><span class="dot"></span> San Francisco, CA · founder of AstroPulse</div>
+        <h1 class="hero-title reveal">I'm Rajesh <span class="soft">(RJ).</span></h1>
+        <p class="hero-lede reveal">
+          I've spent my whole career on one question: <strong>how do you make a system dependable enough
+          to trust it in production</strong> — running on its own, where being wrong has real consequences?
+          I keep chasing that question into harder places, each with a bigger blast radius than the last.
+        </p>
+      </div>
+      <figure class="hero-visual reveal">
+        <img src="assets/xnulinu-hero-kernel.webp" width="1024" height="1536" alt="" fetchpriority="high" />
+        <span class="kernel-signal one"></span>
+        <span class="kernel-signal two"></span>
+        <figcaption class="hero-legend"><b>xnulinu</b>: XNU/Mach rings meeting Linux-style kernel paths.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -210,22 +315,21 @@
   <section class="story">
     <div class="wrap">
       <p class="reveal">
-        It started with curiosity, not a career plan. As a student I wrote an <strong>operating system from
-        scratch</strong> — a microkernel with its own scheduler, IPC, and memory manager (ManriX) —
+        It started with <strong>systems from first principles</strong>. As a student I wrote an operating
+        system from scratch — a microkernel with its own scheduler, IPC, and memory manager (ManriX) —
         because I wanted to understand how a computer <em>really</em> works, all the way down. I never lost
         that instinct: I'd rather understand the bottom of the stack than the top of the hype.
       </p>
       <p class="reveal">
-        That curiosity turned into a 16-year obsession with the hardest version of one problem —
-        <strong>dependability</strong>. IoT platforms wrangling millions of devices. Financial-grade systems
-        where downtime isn't an option. And then Kubernetes, where I pioneered the
-        <strong>Confluent Kubernetes Operator</strong> — the first to run an entire enterprise streaming
-        platform on Kubernetes at scale, the control plane behind thousands of clusters.
+        That became <strong>dependable platforms at scale</strong>: an <strong>IoT SaaS</strong> connecting
+        millions of devices, a <strong>financial-grade PaaS</strong> where downtime was not acceptable,
+        and a <strong>data streaming platform</strong> where I worked on control planes for Kafka across
+        thousands of clusters — plus a secure runtime for <strong>trusted and untrusted workloads</strong>
+        on shared infrastructure.
       </p>
       <p class="reveal">
-        Now I'm the founder of <strong>AstroPulse</strong>, working on the next version of the same question:
-        how does an <strong>AI agent act in production safely</strong>? Not just diagnose — actually act, with
-        every step scoped, approved, audited, and reversible.
+        Now I'm working on <strong>safe production action</strong>: how does an AI agent do more than
+        diagnose? How does it act, with every step <strong>scoped, approved, audited, and reversible</strong>?
       </p>
 
       <!-- THE THREAD -->
@@ -240,19 +344,19 @@
       <div class="arc reveal">
         <div class="step">
           <div class="when">~2001–2005</div>
-          <div class="what"><b>Built an OS for fun.</b> A microkernel, a filesystem reader, IEEE papers on fault-tolerant networking. Learned systems from first principles.</div>
+          <div class="what"><b>Systems from first principles.</b> A microkernel OS, a filesystem reader, IEEE papers on fault-tolerant networking.</div>
         </div>
         <div class="step">
           <div class="when">2010–2018</div>
-          <div class="what"><b>Dependability at scale.</b> IoT platforms at Axeda/PTC; financial-grade cloud platform and self-healing systems at American Express.</div>
+          <div class="what"><b>Dependable platforms at scale.</b> IoT SaaS, financial-grade PaaS, self-healing infrastructure, and production reliability.</div>
         </div>
         <div class="step">
           <div class="when">2018–2024</div>
-          <div class="what"><b>Confluent.</b> Took the Kubernetes operator from early-stage to production, ran a fleet of 5,000+ clusters, and led the on-prem control plane.</div>
+          <div class="what"><b>Data streaming platform.</b> Control planes for Kafka across 5,000+ clusters, an on-prem platform, and a secure runtime for trusted and untrusted workloads.</div>
         </div>
         <div class="step">
           <div class="when">2024–now</div>
-          <div class="what"><b>AstroPulse.</b> Governed execution for AI acting in production. Three granted US patents along the way.</div>
+          <div class="what"><b>Safe production action.</b> Governed execution for AI acting in production, with scope, approval, audit, and rollback.</div>
         </div>
       </div>
 

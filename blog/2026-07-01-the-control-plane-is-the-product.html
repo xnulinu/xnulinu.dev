@@ -34,6 +34,7 @@
       <h1 class="post-title">The control plane is the product</h1>
       <p class="post-summary">In autonomous systems, capability is becoming a commodity. The defensible problem is trusted execution — not diagnosis.</p>
     </header>
+    <figure class="post-hero"><img src="../assets/blog/control-plane-product.webp" alt="The control plane is the product" loading="eager" /></figure>
     <div class="post-body">
       <p>For most of my career the hard part of platform work was getting a system to <em>understand</em> state: read the metrics, correlate the logs, find the failing node. We built increasingly good diagnostic machinery, and we assumed that was where the value lived.</p>
 <p>It isn't. Not anymore.</p>
@@ -41,10 +42,9 @@
 <h2>Reading is not acting</h2>
 <p>A system that reads can be wrong cheaply. A system that <em>acts</em> in production can be wrong catastrophically, at machine speed, without hesitation. So the engineering problem shifts entirely. It stops being "can it figure out the answer" and becomes:</p>
 <ul>
-<li>Can it only do what it's <em>scoped</em> to do?</li>
-<li>Is there a <em>blast radius</em> it cannot exceed?</li>
-<li>Is every action <em>reversible</em>?</li>
-<li>Is there a <em>gate</em> before anything irreversible?</li>
+<li>Is it <strong>scoped</strong>, with a blast radius it cannot exceed?</li>
+<li>Is there an <strong>approval gate</strong> before anything sensitive?</li>
+<li>Is every action <strong>audited and reversible</strong>?</li>
 </ul>
 <p>None of that is intelligence. All of it is infrastructure.</p>
 <h2>The shape that keeps recurring</h2>
