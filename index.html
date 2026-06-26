@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RJ — Who am I</title>
+<meta name="description" content="I'm Rajesh — I build systems you can trust to act when failure isn't an option. 16 years on control planes: from a microkernel OS written for fun, to the Confluent Kubernetes Operator, to AstroPulse, where AI acts in production safely." />
+<meta property="og:title" content="RJ — Who am I" />
+<meta property="og:description" content="I build systems you can trust to act when failure isn't an option. From a microkernel OS to the Confluent Kubernetes Operator to AstroPulse." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0E1116;
+    --panel: #151A21;
+    --panel-2: #1B222B;
+    --line: #232C37;
+    --line-bright: #2E3A48;
+    --ink: #E6EBF0;
+    --ink-dim: #9AA7B4;
+    --ink-faint: #61707E;
+    --accent: #4F9DD8;
+    --accent-dim: #2A4A63;
+    --signal: #6FCF97;
+    --warn: #D8A14F;
+    --display: 'Space Grotesk', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Newsreader', serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent-dim); color: #fff; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+  /* background grid */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.25;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+
+  #particle-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* top bar */
+  header.top {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(14,17,22,0.78);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-inner { display: flex; align-items: center; justify-content: space-between; height: 58px; max-width: 880px; margin: 0 auto; padding: 0 28px; }
+  .brand { font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; color: var(--ink); font-weight: 500; white-space: nowrap; }
+  .brand .dim { color: var(--ink-faint); }
+  nav.links { display: flex; gap: 26px; }
+  nav.links a { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); transition: color .15s; }
+  nav.links a:hover { color: var(--accent); }
+  @media (max-width: 640px){ nav.links { gap: 16px; } nav.links a:nth-child(3){ display:none; } .brand-suf{ display:none; } }
+
+  /* hero */
+  section.hero { position: relative; z-index: 1; padding: 96px 0 56px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12.5px; color: var(--accent);
+    letter-spacing: 0.06em; margin-bottom: 24px; display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 rgba(111,207,151,.5); animation: pulse 2.6s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(111,207,151,.45);} 70%{box-shadow:0 0 0 7px rgba(111,207,151,0);} 100%{box-shadow:0 0 0 0 rgba(111,207,151,0);} }
+
+  h1.hero-title {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(38px, 7vw, 68px); line-height: 1.03; margin-bottom: 28px;
+  }
+  h1.hero-title .soft { color: var(--ink-dim); font-weight: 400; }
+  .hero-lede {
+    font-family: var(--serif); font-size: clamp(19px, 2.6vw, 24px); line-height: 1.6;
+    color: var(--ink-dim); max-width: 640px;
+  }
+  .hero-lede strong { color: var(--ink); font-weight: 500; }
+
+  /* prose story */
+  section.story { position: relative; z-index: 1; padding: 40px 0 8px; }
+  .story p {
+    font-family: var(--serif); font-size: clamp(18px, 2.2vw, 21px); line-height: 1.7;
+    color: var(--ink-dim); max-width: 640px; margin-bottom: 26px;
+  }
+  .story p strong { color: var(--ink); font-weight: 500; }
+  .story p a { color: var(--accent); border-bottom: 1px solid var(--accent-dim); transition: border-color .15s; }
+  .story p a:hover { border-color: var(--accent); }
+
+  .sec-label {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-faint);
+    letter-spacing: 0.06em; text-transform: uppercase; margin: 56px 0 22px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sec-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* the thread — pulled out, mono, like a system invariant */
+  .thread {
+    border: 1px solid var(--line); border-left: 2px solid var(--accent);
+    background: var(--panel); border-radius: 8px; padding: 24px 26px; margin: 8px 0 8px;
+  }
+  .thread .k { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .06em; margin-bottom: 10px; }
+  .thread p { font-family: var(--display); font-size: clamp(17px, 2.2vw, 20px); line-height: 1.55; color: var(--ink); max-width: none; margin: 0; }
+  .thread p em { color: var(--accent); font-style: normal; }
+
+  /* timeline chips */
+  .arc { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+  .arc .step { display: grid; grid-template-columns: 130px 1fr; gap: 22px; padding: 16px 0; border-top: 1px solid var(--line); }
+  .arc .step:first-child { border-top: none; }
+  .arc .when { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); padding-top: 2px; }
+  .arc .what { font-size: 15px; color: var(--ink-dim); line-height: 1.6; }
+  .arc .what b { color: var(--ink); font-weight: 600; }
+  .arc .what a { color: var(--accent); }
+  .arc .what a:hover { text-decoration: underline; }
+  @media (max-width: 600px){ .arc .step { grid-template-columns: 1fr; gap: 4px; } }
+
+  /* cards / links out */
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+  .card {
+    border: 1px solid var(--line-bright); border-radius: 8px; background: var(--panel);
+    padding: 20px; transition: border-color .15s, transform .15s;
+    display: block;
+  }
+  .card:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
+  .card .t { font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .card .t .ar { color: var(--accent); font-family: var(--mono); }
+  .card .d { font-size: 13.5px; color: var(--ink-dim); margin-top: 8px; line-height: 1.55; }
+  @media (max-width: 560px){ .cards { grid-template-columns: 1fr; } }
+
+  /* footer */
+  footer.foot { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 48px 0 64px; margin-top: 64px; }
+  .foot-grid { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
+  .foot-cta { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 4vw, 32px); letter-spacing: -0.01em; line-height: 1.12; }
+  .foot-cta .soft { color: var(--ink-dim); font-weight: 400; }
+  .foot-links { display: flex; flex-direction: column; gap: 8px; }
+  .foot-links a { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); transition: .15s; display: inline-flex; gap: 8px; align-items: center; }
+  .foot-links a:hover { color: var(--accent); }
+  .foot-links a .ar { color: var(--accent); }
+  .foot-base { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  /* reveal — only hidden when JS present, so no-JS / crawlers / previews see everything */
+  .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce){ .js .reveal { opacity: 1; transform: none; } }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand"><a href="index.html" title="Home">rajesh<span class="dim">@</span>rc</a><span class="dim brand-suf"> ~ who am i</span></div>
+    <nav class="links">
+      <a href="blog/index.html" title="Read my writing">writing</a>
+      <a href="resume.html" title="My résumé">résumé</a>
+      <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building">astropulse</a>
+      <a href="#contact" title="Get in touch">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="dot"></span> San Francisco, CA · founder of AstroPulse</div>
+      <h1 class="hero-title reveal">I'm Rajesh <span class="soft">(RJ).</span></h1>
+      <p class="hero-lede reveal">
+        I've spent my whole career on one question: <strong>how do you make a system dependable enough
+        to trust it in production</strong> — running on its own, where being wrong has real consequences?
+        I keep chasing that question into harder places, each with a bigger blast radius than the last.
+      </p>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story">
+    <div class="wrap">
+      <p class="reveal">
+        It started with curiosity, not a career plan. As a student I wrote an <strong>operating system from
+        scratch</strong> — a microkernel with its own scheduler, IPC, and memory manager (ManriX) —
+        because I wanted to understand how a computer <em>really</em> works, all the way down. I never lost
+        that instinct: I'd rather understand the bottom of the stack than the top of the hype.
+      </p>
+      <p class="reveal">
+        That curiosity turned into a 16-year obsession with the hardest version of one problem —
+        <strong>dependability</strong>. IoT platforms wrangling millions of devices. Financial-grade systems
+        where downtime isn't an option. And then Kubernetes, where I pioneered the
+        <strong>Confluent Kubernetes Operator</strong> — the first to run an entire enterprise streaming
+        platform on Kubernetes at scale, the control plane behind thousands of clusters.
+      </p>
+      <p class="reveal">
+        Now I'm the founder of <strong>AstroPulse</strong>, working on the next version of the same question:
+        how does an <strong>AI agent act in production safely</strong>? Not just diagnose — actually act, with
+        every step scoped, approved, audited, and reversible.
+      </p>
+
+      <!-- THE THREAD -->
+      <div class="sec-label reveal">the thread</div>
+      <div class="thread reveal">
+        <div class="k">// the invariant under everything I've built</div>
+        <p>Intent should never reach production unchecked. <em>Validate it. Gate the dangerous parts. Make it reversible.</em> Whether it's an operator reconciling a cluster or an AI fixing an incident — that's the shape of every system I trust.</p>
+      </div>
+
+      <!-- THE ARC -->
+      <div class="sec-label reveal">the short arc</div>
+      <div class="arc reveal">
+        <div class="step">
+          <div class="when">~2001–2005</div>
+          <div class="what"><b>Built an OS for fun.</b> A microkernel, a filesystem reader, IEEE papers on fault-tolerant networking. Learned systems from first principles.</div>
+        </div>
+        <div class="step">
+          <div class="when">2010–2018</div>
+          <div class="what"><b>Dependability at scale.</b> IoT platforms at Axeda/PTC; financial-grade cloud platform and self-healing systems at American Express.</div>
+        </div>
+        <div class="step">
+          <div class="when">2018–2024</div>
+          <div class="what"><b>Confluent.</b> Took the Kubernetes operator from early-stage to production, ran a fleet of 5,000+ clusters, and led the on-prem control plane.</div>
+        </div>
+        <div class="step">
+          <div class="when">2024–now</div>
+          <div class="what"><b>AstroPulse.</b> Governed execution for AI acting in production. Three granted US patents along the way.</div>
+        </div>
+      </div>
+
+      <!-- WHERE TO GO -->
+      <div class="sec-label reveal">if you want more</div>
+      <div class="cards reveal">
+        <a class="card" href="blog/index.html" title="Read my writing">
+          <div class="t"><span class="ar">→</span> Writing</div>
+          <div class="d">Where I think out loud about control planes, reliability, and AI in production.</div>
+        </a>
+        <a class="card" href="resume.html" title="My résumé">
+          <div class="t"><span class="ar">→</span> Résumé</div>
+          <div class="d">The detailed version: roles, patents, and the systems behind each one.</div>
+        </a>
+        <a class="card" href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building">
+          <div class="t"><span class="ar">↗</span> AstroPulse</div>
+          <div class="d">What I'm building now — governed execution for AI in production.</div>
+        </a>
+        <a class="card" href="https://www.linkedin.com/in/rbikram/" target="_blank" rel="noopener" title="Connect on LinkedIn">
+          <div class="t"><span class="ar">↗</span> LinkedIn</div>
+          <div class="d">linkedin.com/in/rbikram — for the professional back-and-forth.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- CONTACT / FOOTER -->
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-cta reveal">
+        Building systems you can<br /><span class="soft">trust to act in production.</span>
+      </div>
+      <div class="foot-links reveal">
+        <a class="email-link" data-u="rajesh.rc" data-d="gmail.com" href="#" title="Email me"><span class="ar">→</span> email</a>
+        <a href="blog/index.html" title="Read my writing"><span class="ar">→</span> writing</a>
+        <a href="resume.html" title="My résumé"><span class="ar">→</span> résumé</a>
+        <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building"><span class="ar">→</span> astropulse.io</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© <span class="year">2026</span> RJ</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.add('js');
+  // copyright year, kept current automatically (HTML has a fallback for no-JS)
+  document.querySelectorAll('.year').forEach((e) => { e.textContent = new Date().getFullYear(); });
+  // assemble email at runtime so it never appears in the page source (anti-scrape)
+  document.querySelectorAll('.email-link').forEach((a) => {
+    const addr = a.dataset.u + '@' + a.dataset.d;
+    a.setAttribute('href', 'mailto:' + addr);
+    a.setAttribute('aria-label', 'Email ' + addr);
+  });
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = Math.min(i * 35, 180) + 'ms';
+    io.observe(el);
+  });
+</script>
+<script>
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let mouse = { x: null, y: null, radius: 100 };
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.x;
+    mouse.y = e.y;
+  });
+  window.addEventListener('mouseout', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  class Particle {
+    constructor(x, y, dirX, dirY, size, color) {
+      this.x = x;
+      this.y = y;
+      this.dirX = dirX;
+      this.dirY = dirY;
+      this.size = size;
+      this.color = color;
+      this.baseX = this.x;
+      this.baseY = this.y;
+      this.density = (Math.random() * 30) + 10;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+    update() {
+      let dx = mouse.x - this.x;
+      let dy = mouse.y - this.y;
+      let distance = Math.sqrt(dx * dx + dy * dy);
+      let forceDirX = dx / distance;
+      let forceDirY = dy / distance;
+      let maxDist = mouse.radius;
+      let force = (maxDist - distance) / maxDist;
+      let dirX = this.dirX;
+      let dirY = this.dirY;
+
+      if (distance < mouse.radius) {
+        dirX -= forceDirX * force * this.density * 0.1;
+        dirY -= forceDirY * force * this.density * 0.1;
+      }
+
+      if (this.x > canvas.width || this.x < 0) { this.dirX = -this.dirX; }
+      if (this.y > canvas.height || this.y < 0) { this.dirY = -this.dirY; }
+      
+      this.x += this.dirX;
+      this.y += this.dirY;
+      this.draw();
+    }
+  }
+
+  function init() {
+    particles = [];
+    const particleCount = Math.floor((canvas.width * canvas.height) / 9000);
+    const colors = ['#2E3A48', '#4F9DD8', '#61707E'];
+    for (let i = 0; i < particleCount; i++) {
+      let size = (Math.random() * 1.5) + 0.5;
+      let x = (Math.random() * (innerWidth - size * 2) + size);
+      let y = (Math.random() * (innerHeight - size * 2) + size);
+      let dirX = (Math.random() * .4) - .2;
+      let dirY = (Math.random() * .4) - .2;
+      let color = colors[Math.floor(Math.random() * colors.length)];
+      particles.push(new Particle(x, y, dirX, dirY, size, color));
+    }
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+    }
+  }
+
+  init();
+  animate();
+
+  // Re-init on resize to adjust particle density
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      resizeCanvas();
+      init();
+    }, 250);
+  });
+</script>
+</body>
+</html>

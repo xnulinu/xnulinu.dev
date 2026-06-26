@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{{TITLE}} — RJ</title>
+<meta name="description" content="{{SUMMARY}}" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="../index.html" title="Home">rajesh<span class="dim">@</span>rc<span class="dim"> ~ writing</span></a>
+    <nav class="links">
+      <a href="../index.html" title="Who am I">who am i</a>
+      <a href="index.html" title="Read my writing">writing</a>
+      <a href="../resume.html" title="My résumé">résumé</a>
+      <a href="../index.html#contact" title="Get in touch">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article class="post">
+    <a class="back" href="index.html" title="All writing">← all writing</a>
+    <header class="post-head">
+      <div class="post-meta">{{DATE}}</div>
+      <h1 class="post-title">{{TITLE}}</h1>
+      <p class="post-summary">{{SUMMARY}}</p>
+    </header>
+    <div class="post-body">
+      {{BODY}}
+    </div>
+  </article>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-base">
+    <span>© <span class="year">2026</span> RJ</span>
+    <span><a href="../index.html" title="Back to home">← back to home</a></span>
+  </div>
+</footer>
+<script>
+  document.querySelectorAll('.year').forEach(function (e) { e.textContent = new Date().getFullYear(); });
+</script>
+</body>
+</html>

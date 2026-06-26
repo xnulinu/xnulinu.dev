@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RJ — Résumé</title>
+<meta name="description" content="Principal engineer building the control planes that production infrastructure runs on. Pioneered the Confluent Kubernetes Operator. Founder of AstroPulse. Three granted US patents." />
+<meta property="og:title" content="RJ — Résumé" />
+<meta property="og:description" content="Principal engineer. Pioneered the Confluent Kubernetes Operator. Founder of AstroPulse. Three granted US patents." />
+<meta property="og:type" content="profile" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0E1116;
+    --panel: #151A21;
+    --panel-2: #1B222B;
+    --line: #232C37;
+    --line-bright: #2E3A48;
+    --ink: #E6EBF0;
+    --ink-dim: #9AA7B4;
+    --ink-faint: #61707E;
+    --accent: #4F9DD8;      /* control-plane blue */
+    --accent-dim: #2A4A63;
+    --signal: #6FCF97;      /* "executed / ok" green, used once */
+    --warn: #D8A14F;        /* "approval / gate" amber, used once */
+    --display: 'Space Grotesk', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Newsreader', serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--accent-dim); color: #fff; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- background grid: faint, like an architecture canvas ---------- */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity: 0.25;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  }
+
+  /* ---------- top bar ---------- */
+  header.top {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(14,17,22,0.78);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-inner { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+  .brand { font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; color: var(--ink); font-weight: 500; }
+  .brand .dim { color: var(--ink-faint); }
+  nav.links { display: flex; gap: 26px; }
+  nav.links a { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); transition: color .15s; }
+  nav.links a:hover { color: var(--accent); }
+  @media (max-width: 640px){ nav.links { display: none; } }
+
+  /* ---------- hero ---------- */
+  section.hero { position: relative; z-index: 1; padding: 92px 0 64px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12.5px; color: var(--accent);
+    letter-spacing: 0.06em; margin-bottom: 22px; display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 rgba(111,207,151,.5); animation: pulse 2.6s infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(111,207,151,.45);} 70%{box-shadow:0 0 0 7px rgba(111,207,151,0);} 100%{box-shadow:0 0 0 0 rgba(111,207,151,0);} }
+
+  h1.hero-title {
+    font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
+    font-size: clamp(34px, 6vw, 62px); line-height: 1.04; margin-bottom: 26px;
+  }
+  h1.hero-title .soft { color: var(--ink-dim); font-weight: 400; }
+  .hero-lede {
+    font-family: var(--serif); font-size: clamp(18px, 2.4vw, 22px); line-height: 1.55;
+    color: var(--ink-dim); max-width: 680px; margin-bottom: 38px;
+  }
+  .hero-lede strong { color: var(--ink); font-weight: 500; }
+
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 10px; }
+  .chip {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-dim);
+    border: 1px solid var(--line-bright); border-radius: 4px; padding: 7px 11px;
+    background: var(--panel); transition: border-color .15s, color .15s;
+  }
+  .chip:hover { border-color: var(--accent-dim); color: var(--ink); }
+  .chip a { display: inline-flex; align-items: center; gap: 7px; }
+  .chip .arr { color: var(--accent); }
+
+  /* ---------- the control-plane signature strip ---------- */
+  .cp-strip { position: relative; z-index: 1; margin: 30px auto 8px; }
+  .cp-rail {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    background: var(--panel);
+  }
+  .cp-node { padding: 18px 18px; border-right: 1px solid var(--line); position: relative; }
+  .cp-node:last-child { border-right: none; }
+  .cp-node .k { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .04em; margin-bottom: 7px; }
+  .cp-node .v { font-family: var(--display); font-size: 14.5px; color: var(--ink); font-weight: 500; }
+  .cp-node .flow { position: absolute; right: -7px; top: 50%; transform: translateY(-50%); z-index: 2; color: var(--accent); font-family: var(--mono); font-size: 13px; background: var(--bg); padding: 2px 0; }
+  .cp-node:last-child .flow { display: none; }
+  @media (max-width: 720px){
+    .cp-rail { grid-template-columns: 1fr; }
+    .cp-node { border-right: none; border-bottom: 1px solid var(--line); }
+    .cp-node:last-child { border-bottom: none; }
+    .cp-node .flow { display: block; right: 50%; top: auto; bottom: -9px; transform: translateX(50%) rotate(90deg); }
+    .cp-node:last-child .flow { display: none; }
+  }
+  .cp-caption { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); margin-top: 12px; text-align: right; }
+
+  /* ---------- section scaffolding ---------- */
+  section.block { position: relative; z-index: 1; padding: 64px 0; border-top: 1px solid var(--line); }
+  .sec-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 40px; }
+  .sec-idx { font-family: var(--mono); font-size: 12.5px; color: var(--accent); }
+  .sec-title { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3.2vw, 30px); letter-spacing: -0.01em; }
+  .sec-note { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); margin-left: auto; }
+  @media (max-width:600px){ .sec-note{ display:none; } }
+
+  /* ---------- work entries ---------- */
+  .work { display: flex; flex-direction: column; gap: 0; }
+  .entry {
+    display: grid; grid-template-columns: 200px 1fr; gap: 32px;
+    padding: 30px 0; border-top: 1px solid var(--line);
+  }
+  .entry:first-child { border-top: none; }
+  .entry .meta-col { }
+  .entry .role { font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--ink); }
+  .entry .org { font-family: var(--mono); font-size: 12.5px; color: var(--accent); margin-top: 4px; }
+  .entry .when { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); margin-top: 10px; }
+  .entry .body { }
+  .entry .headline { font-family: var(--serif); font-size: 19px; line-height: 1.5; color: var(--ink); margin-bottom: 14px; }
+  .entry ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .entry li { font-size: 14.5px; color: var(--ink-dim); padding-left: 20px; position: relative; line-height: 1.55; }
+  .entry li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
+  .entry li b { color: var(--ink); font-weight: 600; }
+  .entry .links { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .entry .links a {
+    font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim);
+    border: 1px solid var(--line-bright); border-radius: 4px; padding: 5px 9px; transition: .15s;
+  }
+  .entry .links a:hover { border-color: var(--accent); color: var(--accent); }
+  @media (max-width: 720px){
+    .entry { grid-template-columns: 1fr; gap: 14px; }
+    .entry .when { margin-top: 6px; }
+  }
+
+  /* ---------- patents ---------- */
+  .patents { display: flex; flex-direction: column; }
+  .pat {
+    display: grid; grid-template-columns: 200px 1fr auto; gap: 32px; align-items: baseline;
+    padding: 18px 0; border-top: 1px solid var(--line);
+  }
+  .pat:first-child { border-top: none; }
+  .pat .num { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 500; }
+  .pat .num a:hover { text-decoration: underline; }
+  .pat .ttl { font-size: 14.5px; color: var(--ink); line-height: 1.45; }
+  .pat .date { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; }
+  @media (max-width: 720px){
+    .pat { grid-template-columns: 1fr; gap: 5px; }
+    .pat .date { margin-top: 2px; }
+  }
+
+  /* ---------- expertise grid ---------- */
+  .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .exp-cell { background: var(--panel); padding: 24px; }
+  .exp-cell h3 { font-family: var(--mono); font-size: 12.5px; color: var(--accent); font-weight: 600; letter-spacing: .03em; margin-bottom: 12px; }
+  .exp-cell p { font-size: 14px; color: var(--ink-dim); line-height: 1.6; }
+  @media (max-width: 640px){ .exp-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- open source / education ---------- */
+  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 720px){ .twocol { grid-template-columns: 1fr; gap: 36px; } }
+  .mini h4 { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); letter-spacing: .04em; margin-bottom: 18px; text-transform: uppercase; }
+  .mini .item { padding: 12px 0; border-top: 1px solid var(--line); }
+  .mini .item:first-of-type { border-top: none; }
+  .mini .item .t { font-size: 14.5px; color: var(--ink); font-weight: 500; }
+  .mini .item .t a { color: var(--ink); }
+  .mini .item .t a:hover { color: var(--accent); }
+  .mini .item .d { font-size: 13px; color: var(--ink-dim); margin-top: 4px; line-height: 1.5; }
+  .mini .item .m { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 6px; }
+
+  /* ---------- footer ---------- */
+  footer.foot { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 48px 0 64px; }
+  .foot-grid { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
+  .foot-cta { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 4vw, 34px); letter-spacing: -0.01em; line-height: 1.1; }
+  .foot-cta .soft { color: var(--ink-dim); font-weight: 400; }
+  .foot-links { display: flex; flex-direction: column; gap: 8px; }
+  .foot-links a { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); transition: .15s; display: inline-flex; gap: 8px; align-items: center; }
+  .foot-links a:hover { color: var(--accent); }
+  .foot-links a .ar { color: var(--accent); }
+  .foot-base { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  /* reveal on scroll — only hidden when JS is present, so no-JS / crawlers / previews see everything */
+  .js .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce){ .js .reveal { opacity: 1; transform: none; } }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  /* print / save-as-PDF: flip the palette to light by overriding the tokens */
+  @media print {
+    :root {
+      --bg:#fff; --panel:#fff; --panel-2:#fff;
+      --line:#dfe3e8; --line-bright:#cfd5dc;
+      --ink:#14181d; --ink-dim:#3a424b; --ink-faint:#6b7480;
+      --accent:#1c6ea4; --accent-dim:#cfe0ec;
+    }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .grid-bg, header.top, .sec-note, .cp-caption { display: none !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    body { background: #fff; }
+    section.hero { padding: 8px 0 20px; }
+    section.block { padding: 20px 0; break-inside: avoid; }
+    .entry, .pat { break-inside: avoid; }
+    a { text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <div class="brand">rajesh<span class="dim">@</span>rc<span class="dim"> ~ principal engineer</span></div>
+    <nav class="links">
+      <a href="index.html" title="Who am I">who am i</a>
+      <a href="#work" title="Selected work">work</a>
+      <a href="#patents" title="Patents">patents</a>
+      <a href="#expertise" title="What I work on">expertise</a>
+      <a href="blog/index.html" title="Read my writing">writing</a>
+      <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=rajesh+bikram&amp;btnG=" target="_blank" rel="noopener" title="My publications on Google Scholar">publications</a>
+      <a href="#contact" title="Get in touch">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow reveal"><span class="dot"></span> distributed systems · kubernetes platform · cloud infrastructure</div>
+      <h1 class="hero-title reveal">
+        I build the control planes<br />
+        <span class="soft">that production infrastructure runs on.</span>
+      </h1>
+      <p class="hero-lede reveal">
+        16 years on one problem in escalating domains: making systems <strong>dependable</strong> when
+        failure isn't an option. I pioneered the <strong>Confluent Kubernetes Operator</strong> — the first
+        to run an entire enterprise streaming platform on Kubernetes at scale — and now I'm founder of
+        <strong>AstroPulse</strong>, working on how an AI agent acts in production safely.
+      </p>
+      <div class="hero-meta reveal">
+        <span class="chip"><a href="https://drive.google.com/file/d/1OGxguC88H3lWbmAW5u8Wf6Upwx83AEb1/view?usp=sharing" target="_blank" rel="noopener" title="Download résumé (PDF)"><span class="arr">↗</span> résumé</a></span>
+        <span class="chip"><a href="https://www.linkedin.com/in/rbikram/" target="_blank" rel="noopener" title="Connect on LinkedIn"><span class="arr">↗</span> linkedin/rbikram</a></span>
+        <span class="chip"><a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building"><span class="arr">↗</span> astropulse.io</a></span>
+        <span class="chip"><a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=rajesh+bikram&amp;btnG=" target="_blank" rel="noopener" title="My publications on Google Scholar"><span class="arr">↗</span> publications</a></span>
+        <span class="chip"><a class="email-link" data-u="rajesh.rc" data-d="gmail.com" href="#" title="Email me"><span class="arr">✉</span> email</a></span>
+      </div>
+    </div>
+
+    <!-- control-plane signature strip -->
+    <div class="wrap cp-strip reveal">
+      <div class="cp-rail" role="img" aria-label="Control plane execution model: intent, validation, approval, execution">
+        <div class="cp-node">
+          <div class="k">01 / INTENT</div>
+          <div class="v">An agent or operator proposes an action</div>
+          <span class="flow">→</span>
+        </div>
+        <div class="cp-node">
+          <div class="k">02 / VALIDATE</div>
+          <div class="v">Policy, scope &amp; blast-radius checked</div>
+          <span class="flow">→</span>
+        </div>
+        <div class="cp-node">
+          <div class="k">03 / APPROVE</div>
+          <div class="v">Human gate on sensitive writes</div>
+          <span class="flow">→</span>
+        </div>
+        <div class="cp-node">
+          <div class="k">04 / EXECUTE</div>
+          <div class="v">Runs, audited &amp; reversible</div>
+        </div>
+      </div>
+      <div class="cp-caption">// the shape of every system I've built — intent never reaches production unchecked</div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="block" id="work">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-idx">01</span>
+        <span class="sec-title">Selected work</span>
+        <span class="sec-note">// reverse chronological</span>
+      </div>
+
+      <div class="work">
+        <!-- AstroPulse -->
+        <article class="entry reveal">
+          <div class="meta-col">
+            <div class="role">Founder</div>
+            <div class="org">AstroPulse</div>
+            <div class="when">Jul 2024 — Present</div>
+          </div>
+          <div class="body">
+            <p class="headline">Governed execution for AI acting in production.</p>
+            <ul>
+              <li><b>Solo founder</b> — own the product architecture, platform design, and full-stack build, from concept to a working end-to-end system.</li>
+              <li>Built <b>Nova</b>, an AI platform engineer that investigates incidents, plans multi-step remediations, and acts in production — every action scoped, approved, audited, and reversible.</li>
+              <li>Architected <b>Astro Platform</b>, the governed control plane behind Nova: full cluster and application lifecycle across AWS, GCP, Azure, and BYOC, with policy, scoped execution, approval gates, audit trails, rollback, and blast-radius control enforced at the runtime.</li>
+              <li>Register any existing cluster with <b>zero inbound access</b>; provision EKS / GKE / AKS / self-hosted from one interface.</li>
+            </ul>
+            <div class="links">
+              <a href="https://astropulse.io/products/nova" target="_blank" rel="noopener" title="Nova — AI platform engineer">↗ Nova</a>
+              <a href="https://astropulse.io/products/astro-platform" target="_blank" rel="noopener" title="Astro Platform — governed control plane">↗ Astro Platform</a>
+              <a href="https://astropulse.io/docs/blog/ai-sre-race-running-the-wrong-way" target="_blank" rel="noopener" title="Technical thesis: the AI SRE race">↗ Technical thesis</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Confluent PE -->
+        <article class="entry reveal">
+          <div class="meta-col">
+            <div class="role">Principal Engineer</div>
+            <div class="org">Confluent</div>
+            <div class="when">Jul 2021 — Feb 2024</div>
+          </div>
+          <div class="body">
+            <p class="headline">The on-prem control plane, and a runtime for trusted + untrusted workloads.</p>
+            <ul>
+              <li>Technical lead for <b>Confluent for Kubernetes (CFK)</b> — the on-prem and hybrid control plane for the full Confluent platform in customer-managed infrastructure. Set its technical direction and long-term architecture.</li>
+              <li>Identified the inflection point where a single unified operator needed to become two teams, cloud and on-prem, and drove that architectural decision.</li>
+              <li>On the Compute Platform team, architected a secure multi-tenant runtime that <b>unified trusted and untrusted workloads</b> — Kafka consumers and customer-provided Flink UDFs — on shared Kubernetes, with strong isolation, topology-aware scheduling, autoscaling, and failure recovery.</li>
+              <li><b>Lead inventor</b> on three granted US patents — distributed deployment, connector lifecycle, and container scheduling.</li>
+            </ul>
+            <div class="links">
+              <a href="https://docs.confluent.io/operator/current/overview.html" target="_blank" rel="noopener" title="Confluent for Kubernetes documentation">↗ CFK docs</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Confluent Staff -->
+        <article class="entry reveal">
+          <div class="meta-col">
+            <div class="role">Staff Software Engineer II</div>
+            <div class="org">Confluent</div>
+            <div class="when">Jul 2018 — Jun 2021</div>
+          </div>
+          <div class="body">
+            <p class="headline">Took the Kubernetes operator from early-stage to production.</p>
+            <ul>
+              <li>One operator running the entire Confluent platform on Kubernetes: Kafka, Schema Registry, Connect, ZooKeeper, REST Proxy, and more.</li>
+              <li>Built the operator's <b>core reconciliation engine</b>, lifecycle management, upgrade orchestration, and failure recovery — the foundation for both Confluent Cloud (SaaS) and CFK (on-prem).</li>
+              <li>Technical lead for the Confluent Cloud Kubernetes Operator team, operating a fleet of <b>5,000+ clusters</b>. Designed and built <b>Halyard</b>, Confluent Cloud's internal fleet-management platform — now run by a dedicated platform org.</li>
+            </ul>
+            <div class="links">
+              <a href="https://www.youtube.com/watch?v=VbE27HBSGqw" target="_blank" rel="noopener" title="Kafka Meetup talk, 2019 (YouTube)">↗ Kafka Meetup talk, 2019</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- AmEx -->
+        <article class="entry reveal">
+          <div class="meta-col">
+            <div class="role">Senior Engineer, Cloud Platform</div>
+            <div class="org">American Express</div>
+            <div class="when">Sep 2015 — Jun 2018</div>
+          </div>
+          <div class="body">
+            <p class="headline">Financial-grade platform, where reliability isn't negotiable.</p>
+            <ul>
+              <li><b>Technical lead</b> for the PaaS platform team — drove migration of the legacy deployment platform to a modern PaaS on <b>OpenShift, Docker, and Kubernetes</b>, standardizing and automating delivery across business units.</li>
+              <li>Architected the platform's core services: <b>Monitoring-</b> and <b>Logging-as-a-Service</b> (open-source stack plus AppDynamics; tenant logging into Splunk) and a <b>Docker catalog</b> with full lifecycle support for JBoss, Node.js, and .NET Core.</li>
+              <li>Built a <b>closed-loop self-healing</b> system that autonomously detected and remediated operational failures — <b>significantly reducing operating costs</b>.</li>
+              <li>Added <b>autoscaling, Bring Your Own Image (BYOI), vXLAN, platform availability metrics, and security integration</b> across the platform.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Axeda -->
+        <article class="entry reveal">
+          <div class="meta-col">
+            <div class="role">Senior Software Engineer</div>
+            <div class="org">Axeda / ThingWorx (PTC)</div>
+            <div class="when">Apr 2010 — Sep 2015</div>
+          </div>
+          <div class="body">
+            <p class="headline">IoT platform connecting millions of devices.</p>
+            <ul>
+              <li>Built core components of Axeda's IoT Cloud Platform: custom connectivity protocols (<b>AWP, ASMP</b>) and multi-language SDKs for web, desktop, and Android remote device access over REST.</li>
+              <li>Built a cloud-independent, <b>auto-discovery / auto-configuration</b> monitoring system across GCE and AWS, and a simulation framework generating <b>millions of concurrent device connections</b>.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATENTS -->
+  <section class="block" id="patents">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-idx">02</span>
+        <span class="sec-title">Patents</span>
+        <span class="sec-note">// granted, US</span>
+      </div>
+      <div class="patents">
+        <div class="pat reveal">
+          <div class="num"><a href="https://patents.justia.com/patent/11995478" target="_blank" rel="noopener" title="US Patent 11,995,478 on Justia">US 11,995,478</a></div>
+          <div class="ttl">Multi-cluster deployment across cloud environments via unified declarative API</div>
+          <div class="date">May 2024</div>
+        </div>
+        <div class="pat reveal">
+          <div class="num"><a href="https://patents.justia.com/patent/12112216" target="_blank" rel="noopener" title="US Patent 12,112,216 on Justia">US 12,112,216</a></div>
+          <div class="ttl">Declarative API for configuring and managing Connect clusters on Kubernetes</div>
+          <div class="date">Oct 2024</div>
+        </div>
+        <div class="pat reveal">
+          <div class="num"><a href="https://patentsgazette.uspto.gov/week21/OG/html/1546-4/US12639100-20260526.html" target="_blank" rel="noopener" title="US Patent 12,639,100 in the USPTO Official Gazette">US 12,639,100</a></div>
+          <div class="ttl">Container orchestration using siloed availability zones</div>
+          <div class="date">May 2026</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section class="block" id="expertise">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-idx">03</span>
+        <span class="sec-title">What I work on</span>
+        <span class="sec-note">// the through-line</span>
+      </div>
+      <div class="exp-grid reveal">
+        <div class="exp-cell">
+          <h3>Control-plane architecture</h3>
+          <p>Kubernetes control planes beyond default scale: custom schedulers, operator patterns, apiserver and etcd tuning, multi-tenant workload isolation, CRD-based declarative APIs.</p>
+        </div>
+        <div class="exp-cell">
+          <h3>Distributed systems</h3>
+          <p>Stateful platform design, consensus and coordination, event-driven architecture, failure semantics, and the systems other engineers' work quietly depends on.</p>
+        </div>
+        <div class="exp-cell">
+          <h3>Platform engineering</h3>
+          <p>End-to-end lifecycle automation (provision, deploy, scale, upgrade, rollback, self-heal) across hybrid, multi-cloud, and bring-your-own-cloud environments.</p>
+        </div>
+        <div class="exp-cell">
+          <h3>Reliability &amp; operations</h3>
+          <p>SLO design, on-call systems, game-days, postmortem culture, observability, incident response. Built for correctness and clear failure semantics under production pressure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESEARCH / OSS / EDU -->
+  <section class="block">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-idx">04</span>
+        <span class="sec-title">Research &amp; open source</span>
+        <span class="sec-note">// before the cloud</span>
+      </div>
+      <div class="twocol">
+        <div class="mini reveal">
+          <h4>Open source · 2001–2005</h4>
+          <div class="item">
+            <div class="t"><a href="https://manrix.sourceforge.net/" target="_blank" rel="noopener" title="ManriX — microkernel OS on SourceForge">ManriX ↗</a></div>
+            <div class="d">A microkernel OS built from scratch: custom scheduler, IPC, memory management, and device drivers.</div>
+            <div class="m">microkernel · C · x86</div>
+          </div>
+          <div class="item">
+            <div class="t"><a href="https://sourceforge.net/projects/ext2read/" target="_blank" rel="noopener" title="Ext2Read — ext2/3 reader for Windows, on SourceForge">Ext2Read ↗</a></div>
+            <div class="d">A Linux ext2/ext3 filesystem reader for Windows.</div>
+            <div class="m">filesystems · C++ · win32</div>
+          </div>
+        </div>
+        <div class="mini reveal">
+          <h4>Research &amp; education</h4>
+          <div class="item">
+            <div class="t"><a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=rajesh+bikram&amp;btnG=" target="_blank" rel="noopener" title="My publications on Google Scholar">IEEE conference &amp; journal papers ↗</a></div>
+            <div class="d">2 journal + 7 conference papers on fault-tolerant networking and TCP/IP over optical networks.</div>
+            <div class="m">Google Scholar</div>
+          </div>
+          <div class="item">
+            <div class="t">M.S., Computer Science</div>
+            <div class="d">University of Massachusetts Dartmouth.</div>
+            <div class="m">2007 — 2010</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- CONTACT / FOOTER -->
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-cta reveal">
+        Building systems you can<br /><span class="soft">trust to act in production.</span>
+      </div>
+      <div class="foot-links reveal">
+        <a class="email-link" data-u="rajesh.rc" data-d="gmail.com" href="#" title="Email me"><span class="ar">→</span> email</a>
+        <a href="https://drive.google.com/file/d/1OGxguC88H3lWbmAW5u8Wf6Upwx83AEb1/view?usp=sharing" target="_blank" rel="noopener" title="Download résumé (PDF)"><span class="ar">→</span> résumé (pdf)</a>
+        <a href="https://www.linkedin.com/in/rbikram/" target="_blank" rel="noopener" title="Connect on LinkedIn"><span class="ar">→</span> linkedin.com/in/rbikram</a>
+        <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building"><span class="ar">→</span> astropulse.io</a>
+        <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=rajesh+bikram&amp;btnG=" target="_blank" rel="noopener" title="My publications on Google Scholar"><span class="ar">→</span> publications</a>
+        <a href="blog/index.html" title="Read my writing"><span class="ar">→</span> writing</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© <span class="year">2026</span> RJ</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal — quiet, once
+  document.documentElement.classList.add('js');
+  // copyright year, kept current automatically (HTML has a fallback for no-JS)
+  document.querySelectorAll('.year').forEach((e) => { e.textContent = new Date().getFullYear(); });
+  // assemble email at runtime so it never appears in the page source (anti-scrape)
+  document.querySelectorAll('.email-link').forEach((a) => {
+    const addr = a.dataset.u + '@' + a.dataset.d;
+    a.setAttribute('href', 'mailto:' + addr);
+    a.setAttribute('aria-label', 'Email ' + addr);
+  });
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = Math.min(i * 35, 180) + 'ms';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
