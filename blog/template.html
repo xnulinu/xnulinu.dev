@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>{{TITLE}} — Rajesh RC</title>
+<title>{{TITLE}} — RJ</title>
 <meta name="description" content="{{SUMMARY}}" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,8 +42,12 @@
 
 <footer class="foot">
   <div class="wrap foot-base">
+    <span>© <span class="year">2026</span> RJ</span>
     <span><a href="../index.html" title="Back to home">← back to home</a></span>
   </div>
 </footer>
+<script>
+  document.querySelectorAll('.year').forEach(function (e) { e.textContent = new Date().getFullYear(); });
+</script>
 </body>
 </html>

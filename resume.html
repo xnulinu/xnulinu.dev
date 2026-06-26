@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Rajesh RC — Résumé</title>
+<title>RJ — Résumé</title>
 <meta name="description" content="Principal engineer building the control planes that production infrastructure runs on. Pioneered the Confluent Kubernetes Operator. Founder of AstroPulse. Three granted US patents." />
-<meta property="og:title" content="Rajesh RC — Résumé" />
+<meta property="og:title" content="RJ — Résumé" />
 <meta property="og:description" content="Principal engineer. Pioneered the Confluent Kubernetes Operator. Founder of AstroPulse. Three granted US patents." />
 <meta property="og:type" content="profile" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -330,6 +330,7 @@
           <div class="body">
             <p class="headline">Governed execution for AI acting in production.</p>
             <ul>
+              <li><b>Solo founder</b> — own the product architecture, platform design, and full-stack build, from concept to a working end-to-end system.</li>
               <li>Built <b>Nova</b>, an AI platform engineer that investigates incidents, plans multi-step remediations, and acts in production — every action scoped, approved, audited, and reversible.</li>
               <li>Architected <b>Astro Platform</b>, the governed control plane behind Nova: full cluster and application lifecycle across AWS, GCP, Azure, and BYOC, with policy, scoped execution, approval gates, audit trails, rollback, and blast-radius control enforced at the runtime.</li>
               <li>Register any existing cluster with <b>zero inbound access</b>; provision EKS / GKE / AKS / self-hosted from one interface.</li>
@@ -354,7 +355,8 @@
             <ul>
               <li>Technical lead for <b>Confluent for Kubernetes (CFK)</b> — the on-prem and hybrid control plane for the full Confluent platform in customer-managed infrastructure. Set its technical direction and long-term architecture.</li>
               <li>Identified the inflection point where a single unified operator needed to become two teams, cloud and on-prem, and drove that architectural decision.</li>
-              <li>On the Compute Platform team, architected a secure multi-tenant runtime that <b>unified trusted and untrusted workloads</b> — Kafka consumers and customer-provided Flink UDFs — on shared Kubernetes, with strong workload isolation, topology-aware scheduling, autoscaling, and failure recovery.</li>
+              <li>On the Compute Platform team, architected a secure multi-tenant runtime that <b>unified trusted and untrusted workloads</b> — Kafka consumers and customer-provided Flink UDFs — on shared Kubernetes, with strong isolation, topology-aware scheduling, autoscaling, and failure recovery.</li>
+              <li><b>Lead inventor</b> on three granted US patents — distributed deployment, connector lifecycle, and container scheduling.</li>
             </ul>
             <div class="links">
               <a href="https://docs.confluent.io/operator/current/overview.html" target="_blank" rel="noopener" title="Confluent for Kubernetes documentation">↗ CFK docs</a>
@@ -374,7 +376,7 @@
             <ul>
               <li>One operator running the entire Confluent platform on Kubernetes: Kafka, Schema Registry, Connect, ZooKeeper, REST Proxy, and more.</li>
               <li>Built the operator's <b>core reconciliation engine</b>, lifecycle management, upgrade orchestration, and failure recovery — the foundation for both Confluent Cloud (SaaS) and CFK (on-prem).</li>
-              <li>Technical lead for the Confluent Cloud Kubernetes Operator team, operating a fleet of <b>5,000+ clusters</b>. Designed and built <b>Halyard</b>, Confluent Cloud's internal fleet-management platform.</li>
+              <li>Technical lead for the Confluent Cloud Kubernetes Operator team, operating a fleet of <b>5,000+ clusters</b>. Designed and built <b>Halyard</b>, Confluent Cloud's internal fleet-management platform — now run by a dedicated platform org.</li>
             </ul>
             <div class="links">
               <a href="https://www.youtube.com/watch?v=VbE27HBSGqw" target="_blank" rel="noopener" title="Kafka Meetup talk, 2019 (YouTube)">↗ Kafka Meetup talk, 2019</a>
@@ -392,8 +394,10 @@
           <div class="body">
             <p class="headline">Financial-grade platform, where reliability isn't negotiable.</p>
             <ul>
-              <li>Led migration of the legacy deployment platform to a modern PaaS on OpenShift, Docker, and Kubernetes, standardizing and automating delivery across business units.</li>
-              <li>Built Monitoring- and Logging-as-a-Service plus a closed-loop self-healing system that autonomously detected and remediated operational failures at enterprise scale.</li>
+              <li><b>Technical lead</b> for the PaaS platform team — drove migration of the legacy deployment platform to a modern PaaS on <b>OpenShift, Docker, and Kubernetes</b>, standardizing and automating delivery across business units.</li>
+              <li>Architected the platform's core services: <b>Monitoring-</b> and <b>Logging-as-a-Service</b> (open-source stack plus AppDynamics; tenant logging into Splunk) and a <b>Docker catalog</b> with full lifecycle support for JBoss, Node.js, and .NET Core.</li>
+              <li>Built a <b>closed-loop self-healing</b> system that autonomously detected and remediated operational failures — <b>significantly reducing operating costs</b>.</li>
+              <li>Added <b>autoscaling, Bring Your Own Image (BYOI), vXLAN, platform availability metrics, and security integration</b> across the platform.</li>
             </ul>
           </div>
         </article>
@@ -401,14 +405,15 @@
         <!-- Axeda -->
         <article class="entry reveal">
           <div class="meta-col">
-            <div class="role">Software Engineer</div>
+            <div class="role">Senior Software Engineer</div>
             <div class="org">Axeda / ThingWorx (PTC)</div>
             <div class="when">Apr 2010 — Sep 2015</div>
           </div>
           <div class="body">
             <p class="headline">IoT platform connecting millions of devices.</p>
             <ul>
-              <li>Built core components of Axeda's IoT Cloud Platform: custom connectivity protocols (AWP, ASMP), multi-language SDKs, and a simulation framework generating millions of concurrent device connections.</li>
+              <li>Built core components of Axeda's IoT Cloud Platform: custom connectivity protocols (<b>AWP, ASMP</b>) and multi-language SDKs for web, desktop, and Android remote device access over REST.</li>
+              <li>Built a cloud-independent, <b>auto-discovery / auto-configuration</b> monitoring system across GCE and AWS, and a simulation framework generating <b>millions of concurrent device connections</b>.</li>
             </ul>
           </div>
         </article>
@@ -436,7 +441,7 @@
           <div class="date">Oct 2024</div>
         </div>
         <div class="pat reveal">
-          <div class="num">US 12,639,100</div>
+          <div class="num"><a href="https://patentsgazette.uspto.gov/week21/OG/html/1546-4/US12639100-20260526.html" target="_blank" rel="noopener" title="US Patent 12,639,100 in the USPTO Official Gazette">US 12,639,100</a></div>
           <div class="ttl">Container orchestration using siloed availability zones</div>
           <div class="date">May 2026</div>
         </div>
@@ -499,7 +504,7 @@
           <h4>Research &amp; education</h4>
           <div class="item">
             <div class="t"><a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=rajesh+bikram&amp;btnG=" target="_blank" rel="noopener" title="My publications on Google Scholar">IEEE conference &amp; journal papers ↗</a></div>
-            <div class="d">On fault-tolerant networking and TCP/IP over optical networks.</div>
+            <div class="d">2 journal + 7 conference papers on fault-tolerant networking and TCP/IP over optical networks.</div>
             <div class="m">Google Scholar</div>
           </div>
           <div class="item">
@@ -529,12 +534,17 @@
         <a href="blog/index.html" title="Read my writing"><span class="ar">→</span> writing</a>
       </div>
     </div>
+    <div class="foot-base">
+      <span>© <span class="year">2026</span> RJ</span>
+    </div>
   </div>
 </footer>
 
 <script>
   // scroll reveal — quiet, once
   document.documentElement.classList.add('js');
+  // copyright year, kept current automatically (HTML has a fallback for no-JS)
+  document.querySelectorAll('.year').forEach((e) => { e.textContent = new Date().getFullYear(); });
   // assemble email at runtime so it never appears in the page source (anti-scrape)
   document.querySelectorAll('.email-link').forEach((a) => {
     const addr = a.dataset.u + '@' + a.dataset.d;
