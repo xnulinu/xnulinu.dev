@@ -3,7 +3,7 @@
 Minimal static blog generator. No deps beyond stdlib + markdown (pip install markdown).
 Reads posts/*.md (with --- front matter ---), writes blog/<slug>.html and blog/index.html.
 """
-import os, re, sys, html, datetime, pathlib
+import re, sys, html, pathlib
 
 try:
     import markdown
@@ -37,7 +37,7 @@ def render():
         body_html = markdown.markdown(body, extensions=["fenced_code", "tables"])
         # standard pattern: every post leads with its image, then the content
         image_html = (
-            f'<figure class="post-hero"><img src="../assets/blog/{image}" '
+            f'<figure class="post-hero"><img src="../assets/blog/{html.escape(image)}" '
             f'alt="{html.escape(title)}" loading="eager" /></figure>'
             if image else ""
         )
@@ -54,14 +54,15 @@ def render():
     posts.sort(key=lambda p: p["date"], reverse=True)
 
     def row(p):
-        # each post is a card; its image lives on the same card
+        # each post is a card; its image (when present) lives on the same card
         thumb = (
-            f'<span class="pr-media"><img src="../assets/blog/{p["image"]}" '
+            f'<span class="pr-media"><img src="../assets/blog/{html.escape(p["image"])}" '
             f'alt="" loading="lazy" /></span>'
             if p["image"] else ""
         )
+        cls = "post-row" if p["image"] else "post-row no-media"
         return (
-            f'      <a class="post-row" href="{p["slug"]}.html" title="{html.escape(p["title"])}">\n'
+            f'      <a class="{cls}" href="{p["slug"]}.html" title="{html.escape(p["title"])}">\n'
             f'        <span class="pr-text">\n'
             f'          <span class="pr-date">{html.escape(p["date"])}</span>\n'
             f'          <span class="pr-title">{html.escape(p["title"])}</span>\n'
@@ -78,7 +79,7 @@ def render():
              .replace("{{TITLE}}", "Writing")
              .replace("{{DATE}}", "")
              .replace("{{SUMMARY}}", "Notes on distributed systems, control planes, and safe autonomous execution.")
-             .replace("{{IMAGE}}", "")
+             .replace("    {{IMAGE}}\n", "")
              .replace("{{BODY}}", index_body)
              .replace('<article class="post">', '<article class="post post-index">'))
     (HERE / "index.html").write_text(index)
