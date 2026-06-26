@@ -45,7 +45,7 @@ def render():
 
     posts.sort(key=lambda p: p["date"], reverse=True)
     items = "\n".join(
-        f'''      <a class="post-row" href="/blog/{p["slug"]}.html">
+        f'''      <a class="post-row" href="{p["slug"]}.html" title="{html.escape(p["title"])}">
         <span class="pr-date">{html.escape(p["date"])}</span>
         <span class="pr-mid">
           <span class="pr-title">{html.escape(p["title"])}</span>
