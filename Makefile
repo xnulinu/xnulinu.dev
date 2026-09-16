@@ -19,8 +19,9 @@ $(VENV):
 	$(PIP) install --quiet --upgrade pip
 	$(PIP) install --quiet markdown
 
+# no-store headers: the preview always shows the latest build, never a cached page or stylesheet
 serve:
-	python3 -m http.server 8000
+	python3 -c "import http.server as s; H = type('H', (s.SimpleHTTPRequestHandler,), {'end_headers': lambda self: (self.send_header('Cache-Control', 'no-store'), s.SimpleHTTPRequestHandler.end_headers(self))}); s.ThreadingHTTPServer(('', 8000), H).serve_forever()"
 
 clean:
 	rm -rf $(VENV)

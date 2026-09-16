@@ -12,6 +12,7 @@ CLAUDE.md       repo notes (blog voice, conventions)
 blog/
   posts/*.md    write posts here
   build.py      Markdown → HTML generator
+  diagrams.py   ```flow / ```sets diagram blocks for posts
   template.html post shell
   style.css     shared blog styles
   index.html    generated — list of posts
@@ -33,5 +34,13 @@ First `make blog` creates a local `.venv` with the one dependency (`markdown`), 
    summary: Why trusted execution, not diagnosis, is the defensible problem.
    ---
    ```
+   Diagrams are fenced blocks — see AGENTS.md:
+   ````text
+   ```sets
+   Blueprint: the whole production system
+   Platform Bricks: GPUs, deployment, networking
+   * Your product: scheduler, routing, caching
+   ```
+   ````
 2. `make blog`
 3. Commit the generated HTML and push.

@@ -4,14 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RJ — Who am I</title>
-<meta name="description" content="I'm Rajesh — I build systems you can trust to act when failure isn't an option. 16 years on control planes: from a microkernel OS written for fun, to the Confluent Kubernetes Operator, to AstroPulse, where AI acts in production safely." />
+<meta name="description" content="Rajesh (RJ) builds infrastructure: control planes and platforms. Founder of AstroPulse; previously Confluent." />
 <meta property="og:title" content="RJ — Who am I" />
-<meta property="og:description" content="I build systems you can trust to act when failure isn't an option. From a microkernel OS to the Confluent Kubernetes Operator to AstroPulse." />
+<meta property="og:description" content="Rajesh (RJ) builds infrastructure: control planes and platforms. Founder of AstroPulse; previously Confluent." />
 <meta property="og:type" content="website" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="theme.css?v=8318f185" />
+<script src="theme.js?v=8318f185"></script>
 <style>
   :root {
     --bg: #0E1116;
@@ -25,6 +27,9 @@
     --accent: #4F9DD8;
     --accent-dim: #2A4A63;
     --signal: #6FCF97;
+    --header-bg: rgba(14,17,22,0.78);
+    --shadow: rgba(0, 0, 0, 0.34);
+    --selection-ink: #fff;
     --warn: #D8A14F;
     --display: 'Space Grotesk', sans-serif;
     --mono: 'IBM Plex Mono', monospace;
@@ -49,7 +54,7 @@
     overflow-x: hidden;
   }
 
-  ::selection { background: var(--accent-dim); color: #fff; }
+  ::selection { background: var(--accent-dim); color: var(--selection-ink); }
   a { color: inherit; text-decoration: none; }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
 
@@ -76,7 +81,7 @@
   header.top {
     position: sticky; top: 0; z-index: 50;
     backdrop-filter: blur(10px);
-    background: rgba(14,17,22,0.78);
+    background: var(--header-bg);
     border-bottom: 1px solid var(--line);
   }
   .top-inner { display: flex; align-items: center; justify-content: space-between; height: 58px; max-width: 1080px; margin: 0 auto; padding: 0 28px; }
@@ -112,7 +117,12 @@
     font-family: var(--serif); font-size: clamp(19px, 2.6vw, 24px); line-height: 1.6;
     color: var(--ink-dim); max-width: 640px;
   }
-  .hero-lede strong { color: var(--ink); font-weight: 500; }
+  .hero-body {
+    font-family: var(--serif); font-size: clamp(17px, 2vw, 19px); line-height: 1.65;
+    color: var(--ink-dim); max-width: 600px; margin-top: 18px;
+  }
+  .hero-lede a, .hero-body a { color: var(--ink); border-bottom: 1px solid var(--accent-dim); transition: border-color .15s; }
+  .hero-lede a:hover, .hero-body a:hover { border-color: var(--accent); }
   .hero-visual {
     position: relative;
     width: 100%;
@@ -121,7 +131,7 @@
     border-radius: 8px;
     overflow: hidden;
     background: var(--panel);
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+    box-shadow: 0 24px 70px var(--shadow);
   }
   .hero-visual img {
     display: block;
@@ -162,7 +172,7 @@
     color: rgba(230, 235, 240, 0.74);
     text-shadow: 0 1px 12px rgba(0, 0, 0, 0.8);
   }
-  .hero-legend b { color: var(--ink); font-weight: 600; }
+  .hero-legend b { color: #E6EBF0; font-weight: 600; } /* sits on the image, not the page */
   .kernel-signal {
     position: absolute;
     border: 1px solid rgba(111, 207, 151, 0.35);
@@ -204,61 +214,32 @@
     }
   }
 
-  /* prose story */
-  section.story { position: relative; z-index: 1; padding: 28px 0 8px; }
-  .story p {
-    font-family: var(--serif); font-size: clamp(18px, 2.2vw, 21px); line-height: 1.7;
-    color: var(--ink-dim); margin-bottom: 26px;
-  }
-  .story p strong { color: var(--ink); font-weight: 500; }
-  .story p a { color: var(--accent); border-bottom: 1px solid var(--accent-dim); transition: border-color .15s; }
-  .story p a:hover { border-color: var(--accent); }
-
   .sec-label {
     font-family: var(--mono); font-size: 12px; color: var(--ink-faint);
     letter-spacing: 0.06em; text-transform: uppercase; margin: 56px 0 22px;
     display: flex; align-items: center; gap: 12px;
   }
+  footer.foot .sec-label { margin-top: 40px; }
   .sec-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 
-  /* the thread — pulled out, mono, like a system invariant */
-  .thread {
-    border: 1px solid var(--line); border-left: 2px solid var(--accent);
-    background: var(--panel); border-radius: 8px; padding: 24px 26px; margin: 8px 0 8px;
+  /* recent writing — filled in by blog/build.py */
+  section.recent { position: relative; z-index: 1; }
+  .recent-list { display: flex; flex-direction: column; }
+  .recent-row { display: grid; grid-template-columns: 110px 1fr; column-gap: 22px; row-gap: 4px; align-items: baseline; padding: 16px 0; border-top: 1px solid var(--line); }
+  .recent-row:first-child { border-top: none; padding-top: 0; }
+  .recent-row .rr-date { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); }
+  .recent-row .rr-title { font-size: 17px; font-weight: 500; color: var(--ink); transition: color .15s; }
+  .recent-row .rr-sum { grid-column: 2; font-family: var(--serif); font-size: 16px; color: var(--ink-dim); line-height: 1.5; }
+  .recent-row:hover .rr-title { color: var(--accent); }
+  .recent-all { display: inline-block; margin-top: 18px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); transition: color .15s; }
+  .recent-all:hover { color: var(--accent); }
+  @media (max-width: 600px) {
+    .recent-row { grid-template-columns: 1fr; }
+    .recent-row .rr-sum { grid-column: 1; }
   }
-  .thread .k { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .06em; margin-bottom: 10px; }
-  .thread p { font-family: var(--display); font-size: clamp(17px, 2.2vw, 20px); line-height: 1.55; color: var(--ink); max-width: none; margin: 0; }
-  .thread p em { color: var(--accent); font-style: normal; }
-
-  /* timeline chips */
-  .arc { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
-  .arc .step { display: grid; grid-template-columns: 130px 1fr; gap: 22px; padding: 16px 0; border-top: 1px solid var(--line); }
-  .arc .step:first-child { border-top: none; }
-  .arc .when { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); padding-top: 2px; }
-  .arc .what { font-size: 15px; color: var(--ink-dim); line-height: 1.6; }
-  .arc .what b { color: var(--ink); font-weight: 600; }
-  .arc .what a { color: var(--accent); }
-  .arc .what a:hover { text-decoration: underline; }
-  @media (max-width: 600px){ .arc .step { grid-template-columns: 1fr; gap: 4px; } }
-
-  /* cards / links out */
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
-  .card {
-    border: 1px solid var(--line-bright); border-radius: 8px; background: var(--panel);
-    padding: 20px; transition: border-color .15s, transform .15s;
-    display: block;
-  }
-  .card:hover { border-color: var(--accent-dim); transform: translateY(-2px); }
-  .card .t { font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
-  .card .t .ar { color: var(--accent); font-family: var(--mono); }
-  .card .d { font-size: 13.5px; color: var(--ink-dim); margin-top: 8px; line-height: 1.55; }
-  @media (max-width: 560px){ .cards { grid-template-columns: 1fr; } }
 
   /* footer */
-  footer.foot { position: relative; z-index: 1; border-top: 1px solid var(--line); padding: 48px 0 64px; margin-top: 64px; }
-  .foot-grid { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
-  .foot-cta { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 4vw, 32px); letter-spacing: -0.01em; line-height: 1.12; }
-  .foot-cta .soft { color: var(--ink-dim); font-weight: 400; }
+  footer.foot { position: relative; z-index: 1; padding: 0 0 64px; margin-top: 32px; }
   .foot-links { display: flex; flex-direction: column; gap: 8px; }
   .foot-links a { font-family: var(--mono); font-size: 13px; color: var(--ink-dim); transition: .15s; display: inline-flex; gap: 8px; align-items: center; }
   .foot-links a:hover { color: var(--accent); }
@@ -280,12 +261,19 @@
 <header class="top">
   <div class="top-inner">
     <div class="brand"><a href="index.html" title="Home">rajesh<span class="dim">@</span>rc</a><span class="dim brand-suf"> ~ who am i</span></div>
-    <nav class="links">
-      <a href="blog/index.html" title="Read my writing">writing</a>
-      <a href="resume.html" title="My résumé">résumé</a>
-      <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building">astropulse</a>
-      <a href="#contact" title="Get in touch">contact</a>
-    </nav>
+    <div class="top-actions">
+      <nav class="links">
+        <a href="blog/index.html" title="Read my writing">writing</a>
+        <a href="resume.html" title="My résumé">résumé</a>
+        <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building">astropulse</a>
+        <a href="#contact" title="Get in touch">contact</a>
+      </nav>
+      <button class="theme-toggle" type="button" title="Switch theme" aria-label="Switch theme">
+        <svg class="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <span class="tt-label">light</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -294,12 +282,28 @@
   <section class="hero">
     <div class="wrap hero-wrap">
       <div class="hero-copy">
-        <div class="eyebrow reveal"><span class="dot"></span> San Francisco, CA · founder of AstroPulse</div>
+        <div class="eyebrow reveal"><span class="dot"></span> San Francisco, CA</div>
         <h1 class="hero-title reveal">I'm Rajesh <span class="soft">(RJ).</span></h1>
         <p class="hero-lede reveal">
-          I've spent my whole career on one question: <strong>how do you make a system dependable enough
-          to trust it in production</strong> — running on its own, where being wrong has real consequences?
-          I keep chasing that question into harder places, each with a bigger blast radius than the last.
+          I build infrastructure: the control planes and platforms that other people's software runs on.
+        </p>
+        <p class="hero-body reveal">
+          Right now that's <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse">AstroPulse</a>, which I've built
+          end to end myself. It started as a control plane for running applications in your own cloud: clusters,
+          deployment, networking, upgrades and rollback, with the same approvals and audit whether a person or an AI
+          agent makes the change.
+        </p>
+        <p class="hero-body reveal">
+          Now I'm extending it to AI infrastructure. GPUs, model serving and training are a different kind of
+          workload from the ones I've worked on, but the problem is one I know well: every infrastructure
+          product rebuilds the same production machinery around the part that actually makes it different.
+          I want AstroPulse to be that machinery, so AI infrastructure companies can keep their own runtime, scheduler
+          or router and <a href="blog/2026-09-16-if-everything-is-custom-it-isnt-a-platform.html" title="If everything is custom, it isn't a platform">run it on AstroPulse</a>
+          instead of building the platform underneath themselves.
+        </p>
+        <p class="hero-body reveal">
+          Before AstroPulse I was at Confluent, working on how to run and scale their streaming platform
+          for both cloud and on-prem customers.
         </p>
       </div>
       <figure class="hero-visual reveal">
@@ -311,75 +315,30 @@
     </div>
   </section>
 
-  <!-- STORY -->
-  <section class="story">
+  <!-- RECENT WRITING -->
+  <section class="recent">
     <div class="wrap">
-      <p class="reveal">
-        It started with <strong>systems from first principles</strong>. As a student I wrote an operating
-        system from scratch — a microkernel with its own scheduler, IPC, and memory manager (ManriX) —
-        because I wanted to understand how a computer <em>really</em> works, all the way down. I never lost
-        that instinct: I'd rather understand the bottom of the stack than the top of the hype.
-      </p>
-      <p class="reveal">
-        That became <strong>dependable platforms at scale</strong>: an <strong>IoT SaaS</strong> connecting
-        millions of devices, a <strong>financial-grade PaaS</strong> where downtime was not acceptable,
-        and a <strong>data streaming platform</strong> where I worked on control planes for Kafka across
-        thousands of clusters — plus a secure runtime for <strong>trusted and untrusted workloads</strong>
-        on shared infrastructure.
-      </p>
-      <p class="reveal">
-        Now I'm working on <strong>safe production action</strong>: how does an AI agent do more than
-        diagnose? How does it act, with every step <strong>scoped, approved, audited, and reversible</strong>?
-      </p>
-
-      <!-- THE THREAD -->
-      <div class="sec-label reveal">the thread</div>
-      <div class="thread reveal">
-        <div class="k">// the invariant under everything I've built</div>
-        <p>Intent should never reach production unchecked. <em>Validate it. Gate the dangerous parts. Make it reversible.</em> Whether it's an operator reconciling a cluster or an AI fixing an incident — that's the shape of every system I trust.</p>
+      <div class="sec-label reveal">recent writing</div>
+      <div class="recent-list reveal">
+<!-- recent-posts:start (generated by blog/build.py — don't edit by hand) -->
+        <a class="recent-row" href="blog/2026-09-16-if-everything-is-custom-it-isnt-a-platform.html" title="If everything is custom, it isn&#x27;t a platform">
+          <span class="rr-date">2026-09-16</span>
+          <span class="rr-title">If everything is custom, it isn&#x27;t a platform</span>
+          <span class="rr-sum">How do you build a platform without making every new workload a bespoke integration? Bricks are the reusable capabilities. Blueprints compose them around the part of the product that&#x27;s actually yours.</span>
+        </a>
+        <a class="recent-row" href="blog/2026-08-04-agents-need-a-log.html" title="Agents need a log">
+          <span class="rr-date">2026-08-04</span>
+          <span class="rr-title">Agents need a log</span>
+          <span class="rr-sum">The control layer decides what an agent may do. The record of what it actually did — durable, ordered, queryable — is the harder half. That&#x27;s a streaming problem.</span>
+        </a>
+        <a class="recent-row" href="blog/2026-07-01-the-control-plane-is-the-product.html" title="The control plane is the product">
+          <span class="rr-date">2026-07-01</span>
+          <span class="rr-title">The control plane is the product</span>
+          <span class="rr-sum">In autonomous systems, capability is becoming a commodity. The defensible problem is trusted execution — not diagnosis.</span>
+        </a>
+<!-- recent-posts:end -->
       </div>
-
-      <!-- THE ARC -->
-      <div class="sec-label reveal">the short arc</div>
-      <div class="arc reveal">
-        <div class="step">
-          <div class="when">~2001–2005</div>
-          <div class="what"><b>Systems from first principles.</b> A microkernel OS, a filesystem reader, IEEE papers on fault-tolerant networking.</div>
-        </div>
-        <div class="step">
-          <div class="when">2010–2018</div>
-          <div class="what"><b>Dependable platforms at scale.</b> IoT SaaS, financial-grade PaaS, self-healing infrastructure, and production reliability.</div>
-        </div>
-        <div class="step">
-          <div class="when">2018–2024</div>
-          <div class="what"><b>Data streaming platform.</b> Control planes for Kafka across 5,000+ clusters, an on-prem platform, and a secure runtime for trusted and untrusted workloads.</div>
-        </div>
-        <div class="step">
-          <div class="when">2024–now</div>
-          <div class="what"><b>Safe production action.</b> Governed execution for AI acting in production, with scope, approval, audit, and rollback.</div>
-        </div>
-      </div>
-
-      <!-- WHERE TO GO -->
-      <div class="sec-label reveal">if you want more</div>
-      <div class="cards reveal">
-        <a class="card" href="blog/index.html" title="Read my writing">
-          <div class="t"><span class="ar">→</span> Writing</div>
-          <div class="d">Where I think out loud about control planes, reliability, and AI in production.</div>
-        </a>
-        <a class="card" href="resume.html" title="My résumé">
-          <div class="t"><span class="ar">→</span> Résumé</div>
-          <div class="d">The detailed version: roles, patents, and the systems behind each one.</div>
-        </a>
-        <a class="card" href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building">
-          <div class="t"><span class="ar">↗</span> AstroPulse</div>
-          <div class="d">What I'm building now — governed execution for AI in production.</div>
-        </a>
-        <a class="card" href="https://www.linkedin.com/in/rbikram/" target="_blank" rel="noopener" title="Connect on LinkedIn">
-          <div class="t"><span class="ar">↗</span> LinkedIn</div>
-          <div class="d">linkedin.com/in/rbikram — for the professional back-and-forth.</div>
-        </a>
-      </div>
+      <a class="recent-all reveal" href="blog/index.html" title="All writing">all writing →</a>
     </div>
   </section>
 </main>
@@ -387,16 +346,9 @@
 <!-- CONTACT / FOOTER -->
 <footer class="foot" id="contact">
   <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-cta reveal">
-        Building systems you can<br /><span class="soft">trust to act in production.</span>
-      </div>
-      <div class="foot-links reveal">
-        <a class="email-link" data-u="rajesh.rc" data-d="gmail.com" href="#" title="Email me"><span class="ar">→</span> email</a>
-        <a href="blog/index.html" title="Read my writing"><span class="ar">→</span> writing</a>
-        <a href="resume.html" title="My résumé"><span class="ar">→</span> résumé</a>
-        <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building"><span class="ar">→</span> astropulse.io</a>
-      </div>
+    <div class="sec-label reveal">contact</div>
+    <div class="foot-links reveal">
+      <a href="https://www.linkedin.com/in/rbikram/" target="_blank" rel="noopener" title="Connect on LinkedIn"><span class="ar">→</span> linkedin</a>
     </div>
     <div class="foot-base">
       <span>© <span class="year">2026</span> RJ</span>
@@ -408,12 +360,6 @@
   document.documentElement.classList.add('js');
   // copyright year, kept current automatically (HTML has a fallback for no-JS)
   document.querySelectorAll('.year').forEach((e) => { e.textContent = new Date().getFullYear(); });
-  // assemble email at runtime so it never appears in the page source (anti-scrape)
-  document.querySelectorAll('.email-link').forEach((a) => {
-    const addr = a.dataset.u + '@' + a.dataset.d;
-    a.setAttribute('href', 'mailto:' + addr);
-    a.setAttribute('aria-label', 'Email ' + addr);
-  });
   const io = new IntersectionObserver((entries) => {
     for (const e of entries) {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
@@ -489,10 +435,20 @@
     }
   }
 
+  // particle palette comes from the theme tokens
+  function particleColors() {
+    const s = getComputedStyle(document.documentElement);
+    return ['--line-bright', '--accent', '--ink-faint'].map((v) => s.getPropertyValue(v).trim());
+  }
+  document.addEventListener('themechange', () => {
+    const colors = particleColors();
+    particles.forEach((p) => { p.color = colors[Math.floor(Math.random() * colors.length)]; });
+  });
+
   function init() {
     particles = [];
     const particleCount = Math.floor((canvas.width * canvas.height) / 9000);
-    const colors = ['#2E3A48', '#4F9DD8', '#61707E'];
+    const colors = particleColors();
     for (let i = 0; i < particleCount; i++) {
       let size = (Math.random() * 1.5) + 0.5;
       let x = (Math.random() * (innerWidth - size * 2) + size);
