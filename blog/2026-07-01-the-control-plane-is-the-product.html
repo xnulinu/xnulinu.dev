@@ -9,7 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
 <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="../theme.css?v=8318f185" />
+<link rel="stylesheet" href="style.css?v=8318f185" />
+<script src="../theme.js?v=8318f185"></script>
 </head>
 <body>
 <div class="grid-bg" aria-hidden="true"></div>
@@ -17,12 +19,19 @@
 <header class="top">
   <div class="wrap top-inner">
     <a class="brand" href="../index.html" title="Home">rajesh<span class="dim">@</span>rc<span class="dim"> ~ writing</span></a>
-    <nav class="links">
-      <a href="../index.html" title="Who am I">who am i</a>
-      <a href="index.html" title="Read my writing">writing</a>
-      <a href="../resume.html" title="My résumé">résumé</a>
-      <a href="../index.html#contact" title="Get in touch">contact</a>
-    </nav>
+    <div class="top-actions">
+      <nav class="links">
+        <a href="../index.html" title="Who am I">who am i</a>
+        <a href="index.html" title="Read my writing">writing</a>
+        <a href="../resume.html" title="My résumé">résumé</a>
+        <a href="../index.html#contact" title="Get in touch">contact</a>
+      </nav>
+      <button class="theme-toggle" type="button" title="Switch theme" aria-label="Switch theme">
+        <svg class="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <span class="tt-label">light</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -30,28 +39,29 @@
   <article class="post">
     <a class="back" href="index.html" title="All writing">← all writing</a>
     <header class="post-head">
-      <div class="post-meta">2026-07-01</div>
+      <div class="post-meta">2026-07-01 · 2 min read</div>
       <h1 class="post-title">The control plane is the product</h1>
       <p class="post-summary">In autonomous systems, capability is becoming a commodity. The defensible problem is trusted execution — not diagnosis.</p>
     </header>
     <figure class="post-hero"><img src="../assets/blog/control-plane-product.webp" alt="The control plane is the product" loading="eager" /></figure>
     <div class="post-body">
       <p>For most of my career the hard part of platform work was getting a system to <em>understand</em> state: read the metrics, correlate the logs, find the failing node. We built increasingly good diagnostic machinery, and we assumed that was where the value lived.</p>
-<p>It isn't. Not anymore.</p>
+<p>It isn&rsquo;t. Not anymore.</p>
 <p>As models get more capable, diagnosis collapses toward a commodity. A model wired to your connectors can describe what broke and propose a fix in seconds. The thing that stays hard — the thing that actually gates whether any of this reaches production — is <strong>action</strong>.</p>
-<h2>Reading is not acting</h2>
-<p>A system that reads can be wrong cheaply. A system that <em>acts</em> in production can be wrong catastrophically, at machine speed, without hesitation. So the engineering problem shifts entirely. It stops being "can it figure out the answer" and becomes:</p>
+<h2 id="reading-is-not-acting">Reading is not acting<a class="headerlink" href="#reading-is-not-acting" title="Link to this section">#</a></h2>
+<p>A system that reads can be wrong cheaply. A system that <em>acts</em> in production can be wrong catastrophically, at machine speed, without hesitation. So the engineering problem shifts entirely. It stops being &ldquo;can it figure out the answer&rdquo; and becomes:</p>
 <ul>
 <li>Is it <strong>scoped</strong>, with a blast radius it cannot exceed?</li>
 <li>Is there an <strong>approval gate</strong> before anything sensitive?</li>
 <li>Is every action <strong>audited and reversible</strong>?</li>
 </ul>
 <p>None of that is intelligence. All of it is infrastructure.</p>
-<h2>The shape that keeps recurring</h2>
-<p>Every dependable system I've built has the same spine: intent never reaches production unchecked. It passes through validation, scoping, and — for anything sensitive — a human gate, before it executes, and everything it does is audited and reversible.</p>
-<p>That was true for a Kubernetes operator reconciling a fleet of clusters. It's true for an AI agent remediating a live incident. The actor changed; the control plane didn't.</p>
-<p>That's the bet behind everything I'm building now: the model was never the bottleneck. The control layer was.</p>
+<h2 id="the-shape-that-keeps-recurring">The shape that keeps recurring<a class="headerlink" href="#the-shape-that-keeps-recurring" title="Link to this section">#</a></h2>
+<p>Every dependable system I&rsquo;ve built has the same spine: intent never reaches production unchecked. It passes through validation, scoping, and — for anything sensitive — a human gate, before it executes, and everything it does is audited and reversible.</p>
+<p>That was true for a Kubernetes operator reconciling a fleet of clusters. It&rsquo;s true for an AI agent remediating a live incident. The actor changed; the control plane didn&rsquo;t.</p>
+<p>That&rsquo;s the bet behind everything I&rsquo;m building now: the model was never the bottleneck. The control layer was.</p>
     </div>
+    <nav class="post-nav"><span></span><a class="pn-link pn-newer" href="2026-08-04-agents-need-a-log.html" title="Agents need a log"><span class="pn-label">newer →</span><span class="pn-title">Agents need a log</span></a></nav>
   </article>
 </main>
 

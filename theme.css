@@ -1,0 +1,48 @@
+/* Theme: dark is the default, defined in each page's :root.
+   This file holds the light palette (token overrides only) and the header toggle. */
+
+:root { color-scheme: dark; }
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #F7F8FA;
+  --panel: #FFFFFF;
+  --panel-2: #EEF1F4;
+  --line: #E1E6EB;
+  --line-bright: #CDD5DD;
+  --ink: #11161C;
+  --ink-dim: #46515C;
+  --ink-faint: #6B7580;
+  --accent: #1F6FAE;
+  --accent-dim: #BCD5EA;
+  --signal: #2E9E62;
+  --warn: #B07820;
+  --header-bg: rgba(247, 248, 250, 0.82);
+  --shadow: rgba(16, 24, 40, 0.12);
+  --selection-ink: var(--ink);
+}
+:root[data-theme="light"] .grid-bg { opacity: 0.7; }
+
+.top-actions { display: flex; align-items: center; gap: 22px; }
+
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--mono); font-size: 12px; line-height: 1; color: var(--ink-dim);
+  background: transparent; border: 1px solid var(--line-bright); border-radius: 999px;
+  padding: 6px 11px 6px 9px; cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+.theme-toggle:hover { color: var(--accent); border-color: var(--accent-dim); }
+.theme-toggle svg { width: 13px; height: 13px; display: block; }
+/* icon shows the theme you'd switch to */
+.theme-toggle .tt-moon, :root[data-theme="light"] .theme-toggle .tt-sun { display: none; }
+:root[data-theme="light"] .theme-toggle .tt-moon { display: block; }
+/* no JS → no data-theme → the button can't work, so don't show it */
+:root:not([data-theme]) .theme-toggle { display: none; }
+
+@media (max-width: 640px) {
+  .top-actions { gap: 14px; }
+  .theme-toggle { padding: 6px 8px; }
+  .theme-toggle .tt-label { display: none; }
+}
+@media print { .theme-toggle { display: none; } }
