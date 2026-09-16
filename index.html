@@ -92,8 +92,15 @@
   nav.links a:hover { color: var(--accent); }
   @media (max-width: 640px){ nav.links { gap: 16px; } nav.links a:nth-child(3){ display:none; } .brand-suf{ display:none; } }
 
-  /* hero */
-  section.hero { position: relative; z-index: 1; padding: 80px 0 28px; }
+  /* hero — the whole first screen, kept to who I am. It stops a little short of the
+     fold so the next section peeks in; the longer story lives there. */
+  section.hero {
+    position: relative; z-index: 1;
+    min-height: calc(100vh - 59px - 150px); min-height: calc(100svh - 59px - 150px);
+    display: flex; align-items: center;
+    padding: 56px 0 16px;
+  }
+  section.hero > .wrap { width: 100%; }
   .eyebrow {
     font-family: var(--mono); font-size: 12.5px; color: var(--accent);
     letter-spacing: 0.06em; margin-bottom: 24px; display: flex; align-items: center; gap: 10px;
@@ -103,29 +110,31 @@
 
   .hero-wrap {
     display: grid;
-    grid-template-columns: minmax(0, 520px) minmax(400px, 1fr);
-    gap: clamp(32px, 5vw, 64px);
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: clamp(32px, 6vw, 80px);
     align-items: center;
   }
   .hero-copy { min-width: 0; }
   h1.hero-title {
     font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
-    font-size: clamp(38px, 7vw, 68px); line-height: 1.03; margin-bottom: 28px;
+    font-size: clamp(40px, 5.6vw, 66px); line-height: 1; margin-bottom: 30px; white-space: nowrap;
   }
   h1.hero-title .soft { color: var(--ink-dim); font-weight: 400; }
   .hero-lede {
-    font-family: var(--serif); font-size: clamp(19px, 2.6vw, 24px); line-height: 1.6;
-    color: var(--ink-dim); max-width: 640px;
+    font-family: var(--serif); font-size: clamp(20px, 2.4vw, 25px); line-height: 1.5;
+    color: var(--ink); max-width: 30em;
   }
-  .hero-body {
-    font-family: var(--serif); font-size: clamp(17px, 2vw, 19px); line-height: 1.65;
-    color: var(--ink-dim); max-width: 600px; margin-top: 18px;
+  .hero-where {
+    font-family: var(--serif); font-size: clamp(17px, 1.9vw, 19px); line-height: 1.6;
+    color: var(--ink-dim); max-width: 26em;
+    margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line-bright);
   }
-  .hero-lede a, .hero-body a { color: var(--ink); border-bottom: 1px solid var(--accent-dim); transition: border-color .15s; }
-  .hero-lede a:hover, .hero-body a:hover { border-color: var(--accent); }
+  .hero-where a, .now-row a { color: var(--ink); border-bottom: 1px solid var(--accent-dim); transition: border-color .15s; }
+  .hero-where a:hover, .now-row a:hover { border-color: var(--accent); }
   .hero-visual {
     position: relative;
-    width: 100%;
+    /* never taller than the first screen (4:5 → width = 0.8 × height) */
+    width: min(100%, 480px, calc((100svh - 59px - 220px) * 0.8));
     margin-left: auto;
     aspect-ratio: 4 / 5;
     border-radius: 8px;
@@ -205,7 +214,9 @@
     72%, 100% { transform: scale(1.22); opacity: 0; }
   }
   @media (max-width: 880px) {
-    section.hero { padding-top: 74px; }
+    section.hero { min-height: 0; display: block; padding: 64px 0 8px; }
+    h1.hero-title { white-space: normal; }
+    .hero-wrap { row-gap: 44px; }
     .hero-wrap { grid-template-columns: 1fr; }
     .hero-visual {
       width: min(100%, 460px);
@@ -221,6 +232,16 @@
   }
   footer.foot .sec-label { margin-top: 40px; }
   .sec-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* what I'm building — a short timeline, same rhythm as the writing list */
+  section.now { position: relative; z-index: 1; }
+  .now-row { display: grid; grid-template-columns: 110px minmax(0, 40em); column-gap: 22px; align-items: baseline; padding: 20px 0; border-top: 1px solid var(--line); }
+  .now-row:first-child { border-top: none; padding-top: 0; }
+  .now-row .nr-when { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); }
+  .now-row p { font-family: var(--serif); font-size: clamp(17px, 1.9vw, 19px); line-height: 1.65; color: var(--ink-dim); }
+  @media (max-width: 600px) {
+    .now-row { grid-template-columns: 1fr; row-gap: 6px; }
+  }
 
   /* recent writing — filled in by blog/build.py */
   section.recent { position: relative; z-index: 1; }
@@ -287,23 +308,9 @@
         <p class="hero-lede reveal">
           I build infrastructure: the control planes and platforms that other people's software runs on.
         </p>
-        <p class="hero-body reveal">
-          Right now that's <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse">AstroPulse</a>, which I've built
-          end to end myself. It started as a control plane for running applications in your own cloud: clusters,
-          deployment, networking, upgrades and rollback, with the same approvals and audit whether a person or an AI
-          agent makes the change.
-        </p>
-        <p class="hero-body reveal">
-          Now I'm extending it to AI infrastructure. GPUs, model serving and training are a different kind of
-          workload from the ones I've worked on, but the problem is one I know well: every infrastructure
-          product rebuilds the same production machinery around the part that actually makes it different.
-          I want AstroPulse to be that machinery, so AI infrastructure companies can keep their own runtime, scheduler
-          or router and <a href="blog/2026-09-16-if-everything-is-custom-it-isnt-a-platform.html" title="If everything is custom, it isn't a platform">run it on AstroPulse</a>
-          instead of building the platform underneath themselves.
-        </p>
-        <p class="hero-body reveal">
-          Before AstroPulse I was at Confluent, working on how to run and scale their streaming platform
-          for both cloud and on-prem customers.
+        <p class="hero-where reveal">
+          Founder of <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse">AstroPulse</a>.
+          Previously at Confluent.
         </p>
       </div>
       <figure class="hero-visual reveal">
@@ -312,6 +319,39 @@
         <span class="kernel-signal two"></span>
         <figcaption class="hero-legend"><b>xnulinu</b>: XNU/Mach rings meeting Linux-style kernel paths.</figcaption>
       </figure>
+    </div>
+  </section>
+
+  <!-- NOW -->
+  <section class="now">
+    <div class="wrap">
+      <div class="sec-label reveal">what i'm building</div>
+      <div class="now-list">
+        <div class="now-row reveal">
+          <span class="nr-when">now</span>
+          <p>
+          Right now that's <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse">AstroPulse</a>, which I've built
+          end to end myself. It started as a control plane for running applications in your own cloud: clusters,
+          deployment, networking, upgrades and rollback, with the same approvals and audit whether a person or an AI
+          agent makes the change.</p>
+        </div>
+        <div class="now-row reveal">
+          <span class="nr-when">next</span>
+          <p>
+          Now I'm extending it to AI infrastructure. GPUs, model serving and training are a different kind of
+          workload from the ones I've worked on, but the problem is one I know well: every infrastructure
+          product rebuilds the same production machinery around the part that actually makes it different.
+          I want AstroPulse to be that machinery, so AI infrastructure companies can keep their own runtime, scheduler
+          or router and <a href="blog/2026-09-16-if-everything-is-custom-it-isnt-a-platform.html" title="If everything is custom, it isn't a platform">run it on AstroPulse</a>
+          instead of building the platform underneath themselves.</p>
+        </div>
+        <div class="now-row reveal">
+          <span class="nr-when">before</span>
+          <p>
+          Before AstroPulse I was at Confluent, working on how to run and scale their streaming platform
+          for both cloud and on-prem customers.</p>
+        </div>
+      </div>
     </div>
   </section>
 
