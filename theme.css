@@ -17,6 +17,8 @@
   --accent-dim: #BCD5EA;
   --signal: #2E9E62;
   --warn: #B07820;
+  --plate: #EDF0F3;
+  --card: #FFFFFF;
   --header-bg: rgba(247, 248, 250, 0.82);
   --shadow: rgba(16, 24, 40, 0.12);
   --selection-ink: var(--ink);

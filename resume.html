@@ -4,16 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RJ — Résumé</title>
-<meta name="description" content="Principal engineer building the control planes that production infrastructure runs on. Pioneered the Confluent Kubernetes Operator. Founder of AstroPulse. Three granted US patents." />
+<meta name="description" content="Founder of AstroPulse. Builds control planes for distributed systems, specializing in streaming platforms, now building AI infrastructure in the customer's own cloud. Three granted US patents." />
 <meta property="og:title" content="RJ — Résumé" />
-<meta property="og:description" content="Principal engineer. Pioneered the Confluent Kubernetes Operator. Founder of AstroPulse. Three granted US patents." />
+<meta property="og:description" content="Founder of AstroPulse. Distributed systems and streaming platforms, now AI infrastructure. Three granted US patents." />
 <meta property="og:type" content="profile" />
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="theme.css?v=8318f185" />
-<script src="theme.js?v=8318f185"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
+<!-- arrows (← → ↗) sit outside the latin subset; fetch just those glyphs so they don't fall back to a system face -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&text=%E2%86%90%E2%86%92%E2%86%97&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="theme.css?v=8cbba48a" />
+<script src="theme.js?v=8cbba48a"></script>
 <style>
   :root {
     --bg: #0E1116;
@@ -87,22 +89,26 @@
   @media (max-width: 640px){ nav.links { display: none; } }
 
   /* ---------- hero ---------- */
-  section.hero { position: relative; z-index: 1; padding: 92px 0 64px; }
+  /* hero: one measure. The h1's long line fills --hero-measure; the lede runs at 4/5 of it, same left edge. */
+  section.hero { position: relative; z-index: 1; padding: 96px 0 64px; --hero-measure: 980px; }
   .eyebrow {
     font-family: var(--mono); font-size: 12.5px; color: var(--accent);
-    letter-spacing: 0.06em; margin-bottom: 22px; display: flex; align-items: center; gap: 10px;
+    letter-spacing: 0.06em; margin-bottom: 26px; display: flex; align-items: baseline; gap: 10px;
   }
-  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 rgba(111,207,151,.5); animation: pulse 2.6s infinite; }
+  .eyebrow .dot { flex: none; align-self: flex-start; margin-top: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--signal); box-shadow: 0 0 0 0 rgba(111,207,151,.5); animation: pulse 2.6s infinite; }
   @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(111,207,151,.45);} 70%{box-shadow:0 0 0 7px rgba(111,207,151,0);} 100%{box-shadow:0 0 0 0 rgba(111,207,151,0);} }
 
   h1.hero-title {
     font-family: var(--display); font-weight: 600; letter-spacing: -0.02em;
-    font-size: clamp(34px, 6vw, 62px); line-height: 1.04; margin-bottom: 26px;
+    font-size: clamp(32px, 4.4vw, 54px); line-height: 1.08; margin-bottom: 30px;
+    max-width: var(--hero-measure); text-wrap: balance;
   }
-  h1.hero-title .soft { color: var(--ink-dim); font-weight: 400; }
+  /* own block so balance works per line on phones (Chrome won't balance across the <br>) */
+  h1.hero-title .soft { display: block; color: var(--ink-dim); font-weight: 400; }
   .hero-lede {
-    font-family: var(--serif); font-size: clamp(18px, 2.4vw, 22px); line-height: 1.55;
-    color: var(--ink-dim); max-width: 680px; margin-bottom: 38px;
+    font-family: var(--serif); font-size: clamp(18px, 2.2vw, 23px); line-height: 1.55;
+    color: var(--ink-dim); max-width: calc(var(--hero-measure) * 0.8); margin-bottom: 40px;
+    text-wrap: pretty;
   }
   .hero-lede strong { color: var(--ink); font-weight: 500; }
 
@@ -115,28 +121,6 @@
   .chip:hover { border-color: var(--accent-dim); color: var(--ink); }
   .chip a { display: inline-flex; align-items: center; gap: 7px; }
   .chip .arr { color: var(--accent); }
-
-  /* ---------- the control-plane signature strip ---------- */
-  .cp-strip { position: relative; z-index: 1; margin: 30px auto 8px; }
-  .cp-rail {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
-    border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
-    background: var(--panel);
-  }
-  .cp-node { padding: 18px 18px; border-right: 1px solid var(--line); position: relative; }
-  .cp-node:last-child { border-right: none; }
-  .cp-node .k { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .04em; margin-bottom: 7px; }
-  .cp-node .v { font-family: var(--display); font-size: 14.5px; color: var(--ink); font-weight: 500; }
-  .cp-node .flow { position: absolute; right: -7px; top: 50%; transform: translateY(-50%); z-index: 2; color: var(--accent); font-family: var(--mono); font-size: 13px; background: var(--bg); padding: 2px 0; }
-  .cp-node:last-child .flow { display: none; }
-  @media (max-width: 720px){
-    .cp-rail { grid-template-columns: 1fr; }
-    .cp-node { border-right: none; border-bottom: 1px solid var(--line); }
-    .cp-node:last-child { border-bottom: none; }
-    .cp-node .flow { display: block; right: 50%; top: auto; bottom: -9px; transform: translateX(50%) rotate(90deg); }
-    .cp-node:last-child .flow { display: none; }
-  }
-  .cp-caption { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); margin-top: 12px; text-align: right; }
 
   /* ---------- section scaffolding ---------- */
   section.block { position: relative; z-index: 1; padding: 64px 0; border-top: 1px solid var(--line); }
@@ -158,9 +142,10 @@
   .entry .org { font-family: var(--mono); font-size: 12.5px; color: var(--accent); margin-top: 4px; }
   .entry .when { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); margin-top: 10px; }
   .entry .body { }
-  .entry .headline { font-family: var(--serif); font-size: 19px; line-height: 1.5; color: var(--ink); margin-bottom: 14px; }
+  .entry .headline { font-family: var(--serif); font-size: 20px; line-height: 1.45; color: var(--ink); margin-bottom: 14px; }
   .entry ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-  .entry li { font-size: 14.5px; color: var(--ink-dim); padding-left: 20px; position: relative; line-height: 1.55; }
+  /* prose is set in the text face (serif), like the home page and blog; grotesk stays for titles, mono for labels */
+  .entry li { font-family: var(--serif); font-size: 16px; color: var(--ink-dim); padding-left: 20px; position: relative; line-height: 1.6; }
   .entry li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); }
   .entry li b { color: var(--ink); font-weight: 600; }
   .entry .links { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -183,7 +168,7 @@
   .pat:first-child { border-top: none; }
   .pat .num { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 500; }
   .pat .num a:hover { text-decoration: underline; }
-  .pat .ttl { font-size: 14.5px; color: var(--ink); line-height: 1.45; }
+  .pat .ttl { font-family: var(--serif); font-size: 16px; color: var(--ink); line-height: 1.45; }
   .pat .date { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; }
   @media (max-width: 720px){
     .pat { grid-template-columns: 1fr; gap: 5px; }
@@ -194,7 +179,7 @@
   .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
   .exp-cell { background: var(--panel); padding: 24px; }
   .exp-cell h3 { font-family: var(--mono); font-size: 12.5px; color: var(--accent); font-weight: 600; letter-spacing: .03em; margin-bottom: 12px; }
-  .exp-cell p { font-size: 14px; color: var(--ink-dim); line-height: 1.6; }
+  .exp-cell p { font-family: var(--serif); font-size: 16px; color: var(--ink-dim); line-height: 1.55; }
   @media (max-width: 640px){ .exp-grid { grid-template-columns: 1fr; } }
 
   /* ---------- open source / education ---------- */
@@ -206,7 +191,7 @@
   .mini .item .t { font-size: 14.5px; color: var(--ink); font-weight: 500; }
   .mini .item .t a { color: var(--ink); }
   .mini .item .t a:hover { color: var(--accent); }
-  .mini .item .d { font-size: 13px; color: var(--ink-dim); margin-top: 4px; line-height: 1.5; }
+  .mini .item .d { font-family: var(--serif); font-size: 15px; color: var(--ink-dim); margin-top: 4px; line-height: 1.5; }
   .mini .item .m { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); margin-top: 6px; }
 
   /* ---------- footer ---------- */
@@ -235,14 +220,70 @@
       --ink:#14181d; --ink-dim:#3a424b; --ink-faint:#6b7480;
       --accent:#1c6ea4; --accent-dim:#cfe0ec;
     }
-    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .grid-bg, header.top, .sec-note, .cp-caption { display: none !important; }
+    /* theme.css sets color-scheme: dark on :root, which paints the page canvas (and the
+       @page margin box) dark around the sheet; force a light canvas edge to edge */
+    :root, :root[data-theme] { color-scheme: light; }
+    @page { margin: 14mm 15mm; }
+    * {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      animation: none !important; transition: none !important;
+    }
+    html, body { background: var(--bg); }
+    /* print type scale in pt: prose 10pt, role headline 11.5pt, section titles 13pt, mono labels 7.5-8pt */
+    body { font-size: 10pt; line-height: 1.4; }
+    .grid-bg, header.top, nav.links, .theme-toggle, .sec-note, .eyebrow .dot { display: none !important; }
     .reveal { opacity: 1 !important; transform: none !important; }
-    body { background: #fff; }
-    section.hero { padding: 8px 0 20px; }
-    section.block { padding: 20px 0; break-inside: avoid; }
-    .entry, .pat { break-inside: avoid; }
     a { text-decoration: none; }
+    .wrap { max-width: none; padding: 0; }
+
+    /* hero: content flows straight on into the first section */
+    section.hero { padding: 0 0 12px; }
+    .eyebrow { font-size: 8pt; margin-bottom: 6px; }
+    h1.hero-title { font-size: 19pt; line-height: 1.15; margin-bottom: 8px; }
+    .hero-lede { font-size: 11pt; line-height: 1.45; margin-bottom: 10px; max-width: none; }
+    .hero-meta { gap: 5px; }
+    .chip { font-size: 7.5pt; padding: 2px 6px; }
+
+    /* sections: no forced breaks; keep each heading with what follows */
+    section.block { padding: 12px 0 4px; }
+    .sec-head { margin-bottom: 6px; gap: 8px; break-after: avoid; page-break-after: avoid; }
+    .sec-idx { font-size: 8pt; }
+    .sec-title { font-size: 13pt; }
+
+    /* roles: tighter, and never split one across pages */
+    .entry { grid-template-columns: 118px 1fr; gap: 16px; padding: 9px 0; break-inside: avoid; page-break-inside: avoid; }
+    .entry .role { font-size: 10pt; line-height: 1.3; }
+    .entry .org { font-size: 8pt; margin-top: 2px; }
+    .entry .when { font-size: 7.5pt; margin-top: 3px; }
+    .entry .headline { font-size: 11.5pt; line-height: 1.35; margin-bottom: 4px; }
+    .entry ul { gap: 2px; }
+    .entry li { font-size: 10pt; line-height: 1.4; padding-left: 13px; }
+    .entry .links { margin-top: 5px; gap: 4px; }
+    .entry .links a { font-size: 7.5pt; padding: 1px 5px; }
+
+    .pat { grid-template-columns: 118px 1fr auto; gap: 16px; padding: 4px 0; break-inside: avoid; page-break-inside: avoid; }
+    .pat .num { font-size: 8.5pt; }
+    .pat .ttl { font-size: 10pt; }
+    .pat .date { font-size: 7.5pt; }
+
+    .exp-grid { break-inside: avoid; page-break-inside: avoid; border-radius: 4px; }
+    .exp-cell { padding: 8px 10px; break-inside: avoid; }
+    .exp-cell h3 { font-size: 8pt; margin-bottom: 3px; }
+    .exp-cell p { font-size: 10pt; line-height: 1.4; }
+
+    .twocol { gap: 24px; }
+    .mini h4 { font-size: 7.5pt; margin-bottom: 4px; }
+    .mini .item { padding: 5px 0; break-inside: avoid; page-break-inside: avoid; }
+    .mini .item .t { font-size: 10pt; }
+    .mini .item .d { font-size: 10pt; margin-top: 1px; line-height: 1.4; }
+    .mini .item .m { font-size: 7.5pt; margin-top: 2px; }
+
+    footer.foot { padding: 12px 0 0; break-inside: avoid; page-break-inside: avoid; }
+    .foot-grid { gap: 12px; }
+    .foot-cta { font-size: 14pt; }
+    .foot-links { gap: 2px; }
+    .foot-links a { font-size: 8.5pt; }
+    .foot-base { margin-top: 10px; font-size: 7.5pt; }
   }
 </style>
 </head>
@@ -251,7 +292,7 @@
 
 <header class="top">
   <div class="wrap top-inner">
-    <div class="brand"><a href="index.html" title="Home">rajesh<span class="dim">@</span>rc</a><span class="dim"> ~ principal engineer</span></div>
+    <div class="brand"><a href="index.html" title="Home">rajesh<span class="dim">@</span>rc</a><span class="dim"> ~ founder, AstroPulse</span></div>
     <div class="top-actions">
       <nav class="links">
         <a href="index.html" title="Who am I">who am i</a>
@@ -275,16 +316,16 @@
   <!-- HERO -->
   <section class="hero">
     <div class="wrap">
-      <div class="eyebrow reveal"><span class="dot"></span> distributed systems · kubernetes platform · cloud infrastructure</div>
+      <div class="eyebrow reveal"><span class="dot"></span> distributed systems · streaming · AI infrastructure</div>
       <h1 class="hero-title reveal">
         I build the control planes<br />
         <span class="soft">that production infrastructure runs on.</span>
       </h1>
       <p class="hero-lede reveal">
-        16 years on one problem in escalating domains: making systems <strong>dependable</strong> when
-        failure isn't an option. I pioneered the <strong>Confluent Kubernetes Operator</strong> — the first
-        to run an entire enterprise streaming platform on Kubernetes at scale — and now I'm founder of
-        <strong>AstroPulse</strong>, working on how an AI agent acts in production safely.
+        I've spent my career keeping distributed systems correct under failure, specializing in
+        <strong>streaming platforms</strong>. Now I'm building <strong>AstroPulse</strong>, so teams shipping
+        AI products don't have to build a production platform under them too: one platform that runs their AI
+        and everything else, in their own cloud.
       </p>
       <div class="hero-meta reveal">
         <span class="chip"><a href="https://drive.google.com/file/d/1OGxguC88H3lWbmAW5u8Wf6Upwx83AEb1/view?usp=sharing" target="_blank" rel="noopener" title="Download résumé (PDF)"><span class="arr">↗</span> résumé</a></span>
@@ -292,32 +333,6 @@
         <span class="chip"><a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse — what I'm building"><span class="arr">↗</span> astropulse.io</a></span>
         <span class="chip"><a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=rajesh+bikram&amp;btnG=" target="_blank" rel="noopener" title="My publications on Google Scholar"><span class="arr">↗</span> publications</a></span>
       </div>
-    </div>
-
-    <!-- control-plane signature strip -->
-    <div class="wrap cp-strip reveal">
-      <div class="cp-rail" role="img" aria-label="Control plane execution model: intent, validation, approval, execution">
-        <div class="cp-node">
-          <div class="k">01 / INTENT</div>
-          <div class="v">An agent or operator proposes an action</div>
-          <span class="flow">→</span>
-        </div>
-        <div class="cp-node">
-          <div class="k">02 / VALIDATE</div>
-          <div class="v">Policy, scope &amp; blast-radius checked</div>
-          <span class="flow">→</span>
-        </div>
-        <div class="cp-node">
-          <div class="k">03 / APPROVE</div>
-          <div class="v">Human gate on sensitive writes</div>
-          <span class="flow">→</span>
-        </div>
-        <div class="cp-node">
-          <div class="k">04 / EXECUTE</div>
-          <div class="v">Runs, audited &amp; reversible</div>
-        </div>
-      </div>
-      <div class="cp-caption">// the shape of every system I've built — intent never reaches production unchecked</div>
     </div>
   </section>
 
@@ -339,16 +354,17 @@
             <div class="when">Jul 2024 — Present</div>
           </div>
           <div class="body">
-            <p class="headline">Governed execution for AI acting in production.</p>
+            <p class="headline">One platform for AI and everything else, in the customer's own cloud.</p>
             <ul>
-              <li><b>Solo founder</b> — own the product architecture, platform design, and full-stack build, from concept to a working end-to-end system.</li>
-              <li>Built <b>Nova</b>, an AI platform engineer that investigates incidents, plans multi-step remediations, and acts in production — every action scoped, approved, audited, and reversible.</li>
-              <li>Architected <b>Astro Platform</b>, the governed control plane behind Nova: full cluster and application lifecycle across AWS, GCP, Azure, and BYOC, with policy, scoped execution, approval gates, audit trails, rollback, and blast-radius control enforced at the runtime.</li>
-              <li>Register any existing cluster with <b>zero inbound access</b>; provision EKS / GKE / AKS / self-hosted from one interface.</li>
+              <li><b>Founder</b> of AstroPulse: one multi-tenant platform that runs AI products and workloads in the customer's own cloud on AWS, Google Cloud and Azure, or on clusters they already run. I own the architecture, platform design and full-stack build.</li>
+              <li>Built <b>model serving</b> end to end: deploy an open model from Hugging Face behind a gateway with autoscaling and a weight cache, beside applications from images, Helm charts and Git, all through one API, CLI and console.</li>
+              <li>Building <b>training and fine-tuning</b> on the customer's own GPUs, so a model goes from training run to served endpoint on the same platform.</li>
+              <li><b>Security, cost and releases</b> come with the platform: managed add-ons, vulnerability scanning, cost visibility per cluster and application, versioned releases with rollback, and an audit log with an integrity check. Clusters connect with no inbound access.</li>
+              <li>Built <b>Nova</b>, an AI agent that investigates incidents and proposes fixes, acting only through the same scoped, approved and audited actions a person uses.</li>
             </ul>
             <div class="links">
-              <a href="https://astropulse.io/products/nova" target="_blank" rel="noopener" title="Nova — AI platform engineer">↗ Nova</a>
-              <a href="https://astropulse.io/products/astro-platform" target="_blank" rel="noopener" title="Astro Platform — governed control plane">↗ Astro Platform</a>
+              <a href="https://astropulse.io/products/nova" target="_blank" rel="noopener" title="Nova, AstroPulse's AI agent">↗ Nova</a>
+              <a href="https://astropulse.io/products/astro-platform" target="_blank" rel="noopener" title="Astro Platform">↗ Astro Platform</a>
               <a href="https://astropulse.io/docs/blog/ai-sre-race-running-the-wrong-way" target="_blank" rel="noopener" title="Technical thesis: the AI SRE race">↗ Technical thesis</a>
             </div>
           </div>
@@ -364,10 +380,9 @@
           <div class="body">
             <p class="headline">The on-prem control plane, and a runtime for trusted + untrusted workloads.</p>
             <ul>
-              <li>Technical lead for <b>Confluent for Kubernetes (CFK)</b> — the on-prem and hybrid control plane for the full Confluent platform in customer-managed infrastructure. Set its technical direction and long-term architecture.</li>
-              <li>Identified the inflection point where a single unified operator needed to become two teams, cloud and on-prem, and drove that architectural decision.</li>
-              <li>On the Compute Platform team, architected a secure multi-tenant runtime that <b>unified trusted and untrusted workloads</b> — Kafka consumers and customer-provided Flink UDFs — on shared Kubernetes, with strong isolation, topology-aware scheduling, autoscaling, and failure recovery.</li>
-              <li><b>Lead inventor</b> on three granted US patents — distributed deployment, connector lifecycle, and container scheduling.</li>
+              <li>Technical lead for <b>Confluent for Kubernetes (CFK)</b>, the on-prem and hybrid control plane for the full Confluent platform. Set its long-term architecture, designed <b>Blueprints</b> so platform teams could offer Confluent to their developers as a self-service product, and took it to enterprise customers running in their own data centers.</li>
+              <li>On the Compute Platform team, architected a secure multi-tenant runtime that <b>unified trusted and untrusted workloads</b>, such as Kafka consumers and customer-provided Flink UDFs, on shared Kubernetes with strong isolation.</li>
+              <li><b>Lead inventor</b> on three granted US patents: distributed deployment, connector lifecycle, and container scheduling.</li>
             </ul>
             <div class="links">
               <a href="https://docs.confluent.io/operator/current/overview.html" target="_blank" rel="noopener" title="Confluent for Kubernetes documentation">↗ CFK docs</a>
@@ -378,16 +393,16 @@
         <!-- Confluent Staff -->
         <article class="entry reveal">
           <div class="meta-col">
-            <div class="role">Staff Software Engineer II</div>
+            <div class="role">Staff Software Engineer</div>
             <div class="org">Confluent</div>
             <div class="when">Jul 2018 — Jun 2021</div>
           </div>
           <div class="body">
             <p class="headline">Took the Kubernetes operator from early-stage to production.</p>
             <ul>
-              <li>One operator running the entire Confluent platform on Kubernetes: Kafka, Schema Registry, Connect, ZooKeeper, REST Proxy, and more.</li>
-              <li>Built the operator's <b>core reconciliation engine</b>, lifecycle management, upgrade orchestration, and failure recovery — the foundation for both Confluent Cloud (SaaS) and CFK (on-prem).</li>
-              <li>Technical lead for the Confluent Cloud Kubernetes Operator team, operating a fleet of <b>5,000+ clusters</b>. Designed and built <b>Halyard</b>, Confluent Cloud's internal fleet-management platform — now run by a dedicated platform org.</li>
+              <li>Built the operator's <b>core reconciliation engine</b>, lifecycle management, upgrade orchestration, and failure recovery for the entire Confluent platform: the foundation for both Confluent Cloud (SaaS) and CFK (on-prem).</li>
+              <li>Technical lead for the Confluent Cloud Kubernetes Operator team, operating a fleet of <b>5,000+ clusters</b>. Designed and built <b>Halyard</b>, Confluent Cloud's internal fleet-management platform.</li>
+              <li><b>My work became the foundation for three teams</b>: the Confluent Cloud operator team, CFK, and fleet management, now run by a dedicated platform org.</li>
             </ul>
             <div class="links">
               <a href="https://www.youtube.com/watch?v=VbE27HBSGqw" target="_blank" rel="noopener" title="Kafka Meetup talk, 2019 (YouTube)">↗ Kafka Meetup talk, 2019</a>
@@ -421,7 +436,7 @@
             <div class="when">Apr 2010 — Sep 2015</div>
           </div>
           <div class="body">
-            <p class="headline">IoT platform connecting millions of devices.</p>
+            <p class="headline">IoT cloud platform: device connectivity and SDKs at scale.</p>
             <ul>
               <li>Built core components of Axeda's IoT Cloud Platform: custom connectivity protocols (<b>AWP, ASMP</b>) and multi-language SDKs for web, desktop, and Android remote device access over REST.</li>
               <li>Built a cloud-independent, <b>auto-discovery / auto-configuration</b> monitoring system across GCE and AWS, and a simulation framework generating <b>millions of concurrent device connections</b>.</li>
@@ -470,20 +485,20 @@
       </div>
       <div class="exp-grid reveal">
         <div class="exp-cell">
-          <h3>Control-plane architecture</h3>
-          <p>Kubernetes control planes beyond default scale: custom schedulers, operator patterns, apiserver and etcd tuning, multi-tenant workload isolation, CRD-based declarative APIs.</p>
-        </div>
-        <div class="exp-cell">
           <h3>Distributed systems</h3>
           <p>Stateful platform design, consensus and coordination, event-driven architecture, failure semantics, and the systems other engineers' work quietly depends on.</p>
         </div>
         <div class="exp-cell">
-          <h3>Platform engineering</h3>
-          <p>End-to-end lifecycle automation (provision, deploy, scale, upgrade, rollback, self-heal) across hybrid, multi-cloud, and bring-your-own-cloud environments.</p>
+          <h3>Streaming systems</h3>
+          <p>Ordering, replication and recovery in log-based streaming systems, and running them as managed services at fleet scale.</p>
         </div>
         <div class="exp-cell">
-          <h3>Reliability &amp; operations</h3>
-          <p>SLO design, on-call systems, game-days, postmortem culture, observability, incident response. Built for correctness and clear failure semantics under production pressure.</p>
+          <h3>Control-plane architecture</h3>
+          <p>Kubernetes control planes beyond default scale: custom schedulers, operator patterns, apiserver and etcd tuning, multi-tenant workload isolation, CRD-based declarative APIs.</p>
+        </div>
+        <div class="exp-cell">
+          <h3>AI infrastructure</h3>
+          <p>Serving and running models (training in progress), and the agents that act on them, in the customer's own cloud, held to the same correctness bar as data systems.</p>
         </div>
       </div>
     </div>
@@ -534,7 +549,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-cta reveal">
-        Building systems you can<br /><span class="soft">trust to act in production.</span>
+        Distributed systems,<br /><span class="soft">built to stay correct.</span>
       </div>
       <div class="foot-links reveal">
         <a href="https://drive.google.com/file/d/1OGxguC88H3lWbmAW5u8Wf6Upwx83AEb1/view?usp=sharing" target="_blank" rel="noopener" title="Download résumé (PDF)"><span class="ar">→</span> résumé (pdf)</a>
