@@ -133,6 +133,9 @@
   }
   .hero-where a, .now-row a { color: var(--ink); border-bottom: 1px solid var(--accent-dim); transition: border-color .15s; }
   .hero-where a:hover, .now-row a:hover { border-color: var(--accent); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 22px; }
+  .hero-actions a { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); transition: color .15s; }
+  .hero-actions a:hover { color: var(--accent); }
   .hero-visual {
     position: relative;
     /* never taller than the first screen (4:5 → width = 0.8 × height) */
@@ -315,6 +318,10 @@
           Founder of <a href="https://astropulse.io" target="_blank" rel="noopener" title="AstroPulse">AstroPulse</a>.
           Previously at Confluent.
         </p>
+        <div class="hero-actions reveal">
+          <a href="blog/index.html" title="Read my writing">read my writing →</a>
+          <a href="resume.html" title="My résumé">résumé →</a>
+        </div>
       </div>
       <figure class="hero-visual reveal">
         <img src="assets/xnulinu-hero-kernel.webp" width="1024" height="1536" alt="" fetchpriority="high" />
@@ -450,26 +457,25 @@
       ctx.fill();
     }
     update() {
-      let dx = mouse.x - this.x;
-      let dy = mouse.y - this.y;
-      let distance = Math.sqrt(dx * dx + dy * dy);
-      let forceDirX = dx / distance;
-      let forceDirY = dy / distance;
-      let maxDist = mouse.radius;
-      let force = (maxDist - distance) / maxDist;
       let dirX = this.dirX;
       let dirY = this.dirY;
 
-      if (distance < mouse.radius) {
-        dirX -= forceDirX * force * this.density * 0.1;
-        dirY -= forceDirY * force * this.density * 0.1;
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance > 0 && distance < mouse.radius) {
+          const force = (mouse.radius - distance) / mouse.radius;
+          dirX -= (dx / distance) * force * this.density * 0.1;
+          dirY -= (dy / distance) * force * this.density * 0.1;
+        }
       }
 
-      if (this.x > canvas.width || this.x < 0) { this.dirX = -this.dirX; }
-      if (this.y > canvas.height || this.y < 0) { this.dirY = -this.dirY; }
-      
-      this.x += this.dirX;
-      this.y += this.dirY;
+      if (this.x > canvas.width || this.x < 0) { this.dirX = -this.dirX; dirX = this.dirX; }
+      if (this.y > canvas.height || this.y < 0) { this.dirY = -this.dirY; dirY = this.dirY; }
+
+      this.x += dirX;
+      this.y += dirY;
       this.draw();
     }
   }
@@ -499,6 +505,15 @@
     }
   }
 
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function renderStatic() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].draw();
+    }
+  }
+
   function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
@@ -508,7 +523,11 @@
   }
 
   init();
-  animate();
+  if (reducedMotion) {
+    renderStatic();
+  } else {
+    animate();
+  }
 
   // Re-init on resize to adjust particle density
   let resizeTimer;
@@ -517,6 +536,7 @@
     resizeTimer = setTimeout(() => {
       resizeCanvas();
       init();
+      if (reducedMotion) renderStatic();
     }, 250);
   });
 </script>

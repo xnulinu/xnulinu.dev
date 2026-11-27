@@ -46,6 +46,8 @@ title: A lab drives the real CLI against the real platform and checks what a use
 * [lock] In CI next: the same verifier and labs
 ```
 
+Each lab gets its own run ID and resource names, and compares against a baseline of known failures so a red run always means the change in front of you broke something.
+
 ## Batches, one verdict
 
 ```flow
@@ -56,6 +58,8 @@ title: Changes pass alone all the time. The batch says whether they pass togethe
 [lab] every safe lab
 * [check] one verdict
 ```
+
+Individual PRs can both pass in isolation and still conflict on `main`. The batch deploys every ready PR together on a fresh copy of `main` and runs every non-destructive lab for a single go/no-go verdict.
 
 ## Every surface, every client
 
@@ -111,7 +115,7 @@ title: Merged changes per week, Jul–Nov, on a log scale. The last week is stil
 6.1
 ```
 
-Same agents. The agents didn't get better at writing code that week. I got better at checking it.
+Same agents. They didn't get better at writing code that week; I got better at checking what they wrote.
 
 ## What's still hard, and the plan
 
@@ -138,7 +142,7 @@ title: Where a batch run spends its time. Writing and merging are no longer the 
 0.1 worktree and merge
 ```
 
-The workshop got fast at writing and merging, and now it waits on itself.
+The workshop got fast at writing and merging, and now it waits on itself—serial labs alone take about half of every batch run.
 
 ```shift
 title: Turning the workshop into a factory. A person still merges.
@@ -156,4 +160,6 @@ upkeep waits on me -> weekly agent routines open draft PRs
 * I review at the gate -> I write the rules and checks
 ```
 
-I started by writing the code. Now I review at the gate. Next I mostly write the rules and checks the agents work within. One thing doesn't move: merging stays a deliberate human act.
+I started by writing the code. Now I review at the gate. Next I mostly write the rules and checks the agents work within—building on the same [platform composition](2026-09-16-if-everything-is-custom-it-isnt-a-platform.html "If everything is custom, it isn't a platform") and [control plane](2026-07-01-the-control-plane-is-the-product.html "The control plane is the product") boundaries. One thing doesn't move: merging stays a deliberate human act.
+
+If you're running agents in parallel and hitting the verification wall too, [tell me what's bottlenecking your loop](../index.html#contact "Get in touch").
