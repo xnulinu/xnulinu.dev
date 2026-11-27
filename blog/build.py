@@ -109,7 +109,7 @@ def render():
     index = (TEMPLATE
              .replace("{{TITLE}}", "Writing")
              .replace("{{DATE}}", "")
-             .replace("{{SUMMARY}}", "Notes on distributed systems, control planes, and safe autonomous execution.")
+             .replace("{{SUMMARY}}", "Notes on distributed systems, streaming, and AI infrastructure.")
              .replace("    {{IMAGE}}\n", "")
              .replace("{{BODY}}", index_body)
              .replace("    {{POST_NAV}}\n", "")
