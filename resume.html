@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet" />
 <!-- arrows (← → ↗) sit outside the latin subset; fetch just those glyphs so they don't fall back to a system face -->
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&text=%E2%86%90%E2%86%92%E2%86%97&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="theme.css?v=8cbba48a" />
-<script src="theme.js?v=8cbba48a"></script>
+<link rel="stylesheet" href="theme.css?v=f1ba9e9d" />
+<script src="theme.js?v=f1ba9e9d"></script>
 <style>
   :root {
     --bg: #0E1116;
@@ -80,12 +80,16 @@
     background: var(--header-bg);
     border-bottom: 1px solid var(--line);
   }
-  .top-inner { display: flex; align-items: center; justify-content: space-between; height: 58px; }
-  .brand { font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; color: var(--ink); font-weight: 500; }
+  .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 58px; }
+  .brand { font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; color: var(--ink); font-weight: 500; white-space: nowrap; }
   .brand .dim { color: var(--ink-faint); }
   nav.links { display: flex; gap: 26px; }
-  nav.links a { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); transition: color .15s; }
+  nav.links a { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); white-space: nowrap; transition: color .15s; }
   nav.links a:hover { color: var(--accent); }
+  /* seven links don't fit beside the full brand at mid widths: drop the brand suffix first,
+     then tighten the gaps and drop the links that repeat the brand or sit in the page below */
+  @media (max-width: 1000px){ .brand-suf { display: none; } }
+  @media (max-width: 840px){ nav.links { gap: 18px; } nav.links a.nav-minor { display: none; } }
   @media (max-width: 640px){ nav.links { display: none; } }
 
   /* ---------- hero ---------- */
@@ -292,12 +296,12 @@
 
 <header class="top">
   <div class="wrap top-inner">
-    <div class="brand"><a href="index.html" title="Home">rajesh<span class="dim">@</span>rc</a><span class="dim"> ~ founder, AstroPulse</span></div>
+    <div class="brand"><a href="index.html" title="Home">rajesh<span class="dim">@</span>rc</a><span class="dim brand-suf"> ~ founder, AstroPulse</span></div>
     <div class="top-actions">
       <nav class="links">
-        <a href="index.html" title="Who am I">who am i</a>
+        <a class="nav-minor" href="index.html" title="Who am I">who am i</a>
         <a href="#work" title="Selected work">work</a>
-        <a href="#patents" title="Patents">patents</a>
+        <a class="nav-minor" href="#patents" title="Patents">patents</a>
         <a href="#expertise" title="What I work on">expertise</a>
         <a href="blog/index.html" title="Read my writing">writing</a>
         <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=rajesh+bikram&amp;btnG=" target="_blank" rel="noopener" title="My publications on Google Scholar">publications</a>

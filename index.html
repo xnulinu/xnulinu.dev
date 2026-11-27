@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet" />
 <!-- arrows (← → ↗) sit outside the latin subset; fetch just those glyphs so they don't fall back to a system face -->
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&text=%E2%86%90%E2%86%92%E2%86%97&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="theme.css?v=8cbba48a" />
-<script src="theme.js?v=8cbba48a"></script>
+<link rel="stylesheet" href="theme.css?v=f1ba9e9d" />
+<script src="theme.js?v=f1ba9e9d"></script>
 <style>
   :root {
     --bg: #0E1116;
@@ -86,13 +86,15 @@
     background: var(--header-bg);
     border-bottom: 1px solid var(--line);
   }
-  .top-inner { display: flex; align-items: center; justify-content: space-between; height: 58px; max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+  .top-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 58px; max-width: 1080px; margin: 0 auto; padding: 0 28px; }
   .brand { font-family: var(--mono); font-size: 13px; letter-spacing: 0.02em; color: var(--ink); font-weight: 500; white-space: nowrap; }
   .brand .dim { color: var(--ink-faint); }
   nav.links { display: flex; gap: 26px; }
-  nav.links a { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); transition: color .15s; }
+  nav.links a { font-family: var(--mono); font-size: 12.5px; color: var(--ink-dim); white-space: nowrap; transition: color .15s; }
   nav.links a:hover { color: var(--accent); }
   @media (max-width: 640px){ nav.links { gap: 16px; } nav.links a:nth-child(3){ display:none; } .brand-suf{ display:none; } }
+  /* narrowest phones: contact is the last section of this page, so it drops out of the bar */
+  @media (max-width: 400px){ nav.links a:nth-child(4){ display:none; } }
 
   /* hero — the whole first screen, kept to who I am. It stops a little short of the
      fold so the next section peeks in; the longer story lives there. */
